@@ -1,0 +1,11 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title=thisRecipe.name + " | Recipe"
+    body
+        h1.title=thisRecipe.name
+        for ingred in thisRecipe.ingredients
+            p=ingred
+        for step in thisRecipe.steps
+            p=step

@@ -3,6 +3,10 @@ module.exports = function(sequelize, DataTypes){
 								name: {
 												type: DataTypes.STRING
 								},
+								id: {
+												type: DataTypes.STRING,
+												primaryKey: true
+								},
 								ingredients: {
 												type: DataTypes.ARRAY(DataTypes.STRING)
 								},

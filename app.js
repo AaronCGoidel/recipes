@@ -45,10 +45,26 @@ router.get("/", async function(req, res){
 				res.render("index", {recipes});
 });
 
+
+router.get("/recipe/*", function(req, res){
+				// get article id from url
+				var getID = /[^/]*$/.exec(req.path)[0];
+				console.log(getID);
+
+				// query database for article with id from url
+				db.Recipe.findOne({
+								where: {
+												id: getID
+								}
+				}).then(thisRecipe => res.render("recipe", {thisRecipe}));
+});
+
 // db.Recipe.destroy({where: {}}).then(function () {});
+// db.Recipe.sync({force: true});
 
 // db.Recipe.create({
 // 				name: "test",
+// 				id: "test",
 // 				ingredients: ["1 cup flour", "1 egg"],
 // 				steps: ["do the first thing", "do the next thing", "last thing"]
 // });
