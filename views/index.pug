@@ -1,0 +1,12 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title Recipe Book
+    body
+        ul
+            JSON.stringify(currentArticle, null, 3)
+            for recipe in recipes
+                li
+                    a(href='/recipe/' + recipe.id)
+                        p=recipe.name

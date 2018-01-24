@@ -32,6 +32,27 @@ router.use(function(req, res, next){
 				next();
 });
 
+// homepage
+router.get("/", async function(req, res){
+				// query for all recipes from newest to oldest
+				const query = db.Recipe.findAll({
+								order: [['createdAt', 'DESC']]
+				});
+
+				const recipes = await query;
+
+				// render homepage with recipes
+				res.render("index", {recipes});
+});
+
+// db.Recipe.destroy({where: {}}).then(function () {});
+
+// db.Recipe.create({
+// 				name: "test",
+// 				ingredients: ["1 cup flour", "1 egg"],
+// 				steps: ["do the first thing", "do the next thing", "last thing"]
+// });
+
 app.use("/",router);
 
 app.use("*",function(req,res){

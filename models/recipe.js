@@ -3,11 +3,10 @@ module.exports = function(sequelize, DataTypes){
 								name: {
 												type: DataTypes.STRING
 								},
-
-								ingredient: {
-												type: DataTypes.JSON
+								ingredients: {
+												type: DataTypes.ARRAY(DataTypes.STRING)
 								},
-								step: {
+								steps: {
 												type: DataTypes.ARRAY(DataTypes.TEXT)
 								}
 				});
