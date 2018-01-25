@@ -1,0 +1,17 @@
+.list-container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+li {
+    margin-right: 50px;
+    height: 10vh;
+    font-size: 2em;
+    list-style: none;
+    border-bottom: 2px solid var(--color-mid);
+}
+
+li a {
+    text-decoration: none;
+    color: var(--color-accent);
+}

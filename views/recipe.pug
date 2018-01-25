@@ -3,9 +3,12 @@ html(lang='en')
     head
         meta(charset='UTF-8')
         title=thisRecipe.name + " | Recipe"
+        link(href='https://fonts.googleapis.com/css?family=Roboto', rel='stylesheet')
+        link(rel='stylesheet', href='../style/parent.css')
     body
         h1.title=thisRecipe.name
-        for ingred in thisRecipe.ingredients
-            p=ingred
+
+        for ingredient in thisRecipe.ingredients
+            p=ingredient
         for step in thisRecipe.steps
             p=step

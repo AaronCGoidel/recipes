@@ -3,10 +3,15 @@ html(lang='en')
     head
         meta(charset='UTF-8')
         title Recipe Book
+        link(href='https://fonts.googleapis.com/css?family=Roboto', rel='stylesheet')
+        link(rel='stylesheet', href='../style/parent.css')
+        link(rel='stylesheet', href='../style/index.css')
     body
-        ul
-            JSON.stringify(currentArticle, null, 3)
-            for recipe in recipes
-                li
-                    a(href='/recipe/' + recipe.id)
-                        p=recipe.name
+        include header
+        .list-container
+            ul
+                //pre=JSON.stringify(recipes, null, 3)
+                for recipe in recipes
+                    li
+                        a(href='/recipe/' + recipe.id)
+                            p=recipe.name
