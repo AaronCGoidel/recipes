@@ -1,0 +1,11 @@
+html(lang='en')
+	head
+		meta(name='google-signin-scope', content='profile email')
+		meta(name='google-signin-client_id', content='786319502323-fqjsf84cnqh79phubfcnnlior07hf385.apps.googleusercontent.com')
+		script(src='https://apis.google.com/js/platform.js', async='', defer='')
+	body
+		.g-signin2(data-onsuccess='onSignIn', data-theme='dark')
+		a(href='#', onclick='signOut();') Sign out
+
+	footer
+		script(src='../scripts/google.js')

@@ -6,7 +6,9 @@ html(lang='en')
         link(href='https://fonts.googleapis.com/css?family=Roboto', rel='stylesheet')
         link(rel='stylesheet', href='../style/parent.css')
         link(rel='stylesheet', href='../style/index.css')
+        script(src='https://apis.google.com/js/platform.js', async='', defer='')
     body
+
         include header
         .list-container
             ul
@@ -15,3 +17,4 @@ html(lang='en')
                     li
                         a(href='/recipe/' + recipe.id)
                             p=recipe.name
+        include login

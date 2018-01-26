@@ -5,4 +5,11 @@
     background-color: var(--color-mid);
     overflow: hidden;
     color: var(--color-white);
+    
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    line-height: 10vh;
 }
