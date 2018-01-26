@@ -3,16 +3,13 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
-
-* {
-    margin: 0;
+    background-color: var(--color-white);
 }
 
 :root {
-    --color-dark: #2f3542;
-    --color-mid: #747d8c;
-    --color-accent: #5352ed;
-    --color-light: #ced6e0;
-    --color-white: #ffffff;
+    --color-dark: #2f3640;
+    --color-mid: #487eb0;
+    --color-accent: #273c75;
+    --color-light: #718093;
+    --color-white: #f5f6fa;
 }
