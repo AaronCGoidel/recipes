@@ -8,9 +8,13 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
     "express": "latest",
-    "pug": "latest",
+    "google-auth-library": "^0.12.0",
+    "googleapis": "^25.0.0",
     "pg": "^7.3.0",
+    "pug": "latest",
     "sequelize": "^4.8.2"
   },
   "author": "Aaron Goidel",

@@ -3,11 +3,9 @@ module.exports = function(sequelize, DataTypes){
 								name: {
 												type: DataTypes.STRING
 								},
-								email: {
-												type: DataTypes.STRING
-								},
-								entryList: {
-												type: DataTypes.ARRAY(DataTypes.STRING)
+								id: {
+												type: DataTypes.STRING,
+												primaryKey: true
 								}
 				});
 				return User;

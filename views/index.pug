@@ -8,8 +8,8 @@ html(lang='en')
         link(rel='stylesheet', href='../style/index.css')
         script(src='https://apis.google.com/js/platform.js', async='', defer='')
     body
-
         include header
+
         .list-container
             ul
                 //pre=JSON.stringify(recipes, null, 3)
@@ -17,4 +17,5 @@ html(lang='en')
                     li
                         a(href='/recipe/' + recipe.id)
                             p=recipe.name
+
         include login

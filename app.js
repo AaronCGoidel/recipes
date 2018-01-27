@@ -2,20 +2,36 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 var pg = require('pg');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 const db = require('./models');
+var GoogleAuth = require('google-auth-library');
 
+// OAuth client ID
+const CLIENT_ID = '786319502323-fqjsf84cnqh79phubfcnnlior07hf385.apps.googleusercontent.com';
 
 pg.defaults.ssl = true;
-
 
 var config = require(__dirname + '/config.js');
 
 app.use(express.static(__dirname + '/public'));
 const path = __dirname + '/public/views/';
 
+// Use body parser
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+// Set port
 const PORT = process.env.PORT || config.express.port;
 
+// Use pug
 app.set("view engine", "pug");
+
+// Setup OAuth
+var auth = new GoogleAuth;
+var client = new auth.OAuth2(CLIENT_ID, '', '');
+
+router.use(cookieParser());
 
 // test database connection
 db.sequelize
@@ -27,6 +43,7 @@ db.sequelize
 								console.error('[DATABASE]Unable to connect to the database:', err);
 				});
 
+// Print request methods
 router.use(function(req, res, next){
 				console.log("/" + req.method);
 				next();
@@ -39,6 +56,7 @@ router.get("/", async function(req, res){
 								order: [['createdAt', 'DESC']]
 				});
 
+
 				const recipes = await query;
 
 				// render homepage with recipes
@@ -47,11 +65,11 @@ router.get("/", async function(req, res){
 
 
 router.get("/recipe/*", function(req, res){
-				// get article id from url
+				// get recipe id from url
 				var getID = /[^/]*$/.exec(req.path)[0];
 				console.log(getID);
 
-				// query database for article with id from url
+				// query database for recipe with id from url
 				db.Recipe.findOne({
 								where: {
 												id: getID
@@ -59,15 +77,28 @@ router.get("/recipe/*", function(req, res){
 				}).then(thisRecipe => res.render("recipe", {thisRecipe}));
 });
 
-// db.Recipe.destroy({where: {}}).then(function () {});
-// db.Recipe.sync({force: true});
 
-// db.Recipe.create({
-// 				name: "test",
-// 				id: "test",
-// 				ingredients: ["1 cup flour", "1 egg"],
-// 				steps: ["do the first thing", "do the next thing", "last thing"]
-// });
+// Handle OAuth login POST
+router.post("/auth", function(req, res){
+				client.verifyIdToken(
+								req.body.idtoken,
+								CLIENT_ID,
+								function(e, login) {
+												if(e){
+																console.log("error");
+																return;
+												}
+												var payload = login.getPayload();
+												currentUser = payload;
+
+								});
+});
+
+
+
+// db.Recipe.destroy({where: {}}).then(function () {});
+// db.User.sync({force: true});
+// db.Recipe.sync({force: true});
 
 app.use("/",router);
 

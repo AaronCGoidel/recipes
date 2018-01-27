@@ -12,6 +12,9 @@ module.exports = function(sequelize, DataTypes){
 								},
 								steps: {
 												type: DataTypes.ARRAY(DataTypes.TEXT)
+								},
+								author: {
+												type: DataTypes.STRING
 								}
 				});
 				return Recipe;

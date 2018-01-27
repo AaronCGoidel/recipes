@@ -1,13 +1,11 @@
-function test(){
-				alert("test");
-}
-
 function onSignIn(googleUser) {
 				var profile = googleUser.getBasicProfile();
-				// alert('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-				// alert('Name: ' + profile.getName());
-				// alert('Image URL: ' + profile.getImageUrl());
-				// alert('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+				var id_token = googleUser.getAuthResponse().id_token;
+				const xhr = new XMLHttpRequest();
+				xhr.open('POST', 'http://localhost:8081/auth', true);
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+				xhr.send('idtoken=' + id_token);
 }
 
 function signOut() {
