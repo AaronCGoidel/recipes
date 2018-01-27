@@ -77,21 +77,50 @@ router.get("/recipe/*", function(req, res){
 				}).then(thisRecipe => res.render("recipe", {thisRecipe}));
 });
 
+router.get("/login", function(req, res){
+				res.render("login")
+});
 
-// Handle OAuth login POST
-router.post("/auth", function(req, res){
+function googleAuthMiddleware(req, res, next){
 				client.verifyIdToken(
 								req.body.idtoken,
 								CLIENT_ID,
-								function(e, login) {
+								function(e, login){
 												if(e){
-																console.log("error");
-																return;
+																res.status(401).redirect("/login").end();
 												}
 												var payload = login.getPayload();
-												currentUser = payload;
-
+												next([payload.sub, payload.given_name, payload.family_name]);
 								});
+}
+
+// Handle OAuth login POST
+router.post("/auth", googleAuthMiddleware, function(req, res){
+				var payload = req.get();
+				console.log(payload)
+				// res.cookie("UID", payload['sub']);
+				// console.log(payload['sub']);
+
+												// db.User
+												// 				.findOrCreate({
+												// 								where: {
+												// 												id: payload['sub']
+												// 								}, defaults: {
+												// 												name_first: payload['given_name'],
+												// 												name_last: payload['family_name']
+												// 								}
+												// 				})
+												// 				.spread((user, created) => {
+												// 								console.log(user.get({
+												// 												plain: true
+												// 								}));
+												// 								console.log(created)
+												// 				});
+
+});
+
+router.post("/deauth", function(req, res){
+				res.render("404")
 });
 
 
