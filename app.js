@@ -53,7 +53,6 @@ router.use(function(req, res, next){
 
 // homepage
 router.get("/", authMiddleware, async function(req, res){
-				console.log("main");
 				// query for all recipes from newest to oldest
 				const query = db.Recipe.findAll({
 								order: [['createdAt', 'DESC']]
@@ -80,6 +79,15 @@ router.get("/recipe/*", function(req, res){
 				}).then(thisRecipe => res.render("recipe", {thisRecipe}));
 });
 
+// Authentication middleware
+function authMiddleware(req, res, next){
+				if(req.cookies.uid){
+								next();
+				}else{
+								res.status(401).redirect("/login").end();
+				}
+}
+
 router.get("/login", function(req, res){
 				res.render("login")
 });
@@ -98,11 +106,6 @@ function verify(token, client_id) {
 				}).catch(function(err){
 								console.log('there was an error');
 				});
-}
-
-function authMiddleware(req, res, next){
-				console.log(req.cookies.uid);
-				next();
 }
 
 // Handle OAuth login POST
