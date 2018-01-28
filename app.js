@@ -7,10 +7,6 @@ var cookieParser = require('cookie-parser');
 const db = require('./models');
 var GoogleAuth = require('google-auth-library');
 
-
-// OAuth client ID
-const CLIENT_ID = '786319502323-fqjsf84cnqh79phubfcnnlior07hf385.apps.googleusercontent.com';
-
 pg.defaults.ssl = true;
 
 var config = require(__dirname + '/config.js');
@@ -22,6 +18,9 @@ const path = __dirname + '/public/views/';
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// OAuth client ID
+const CLIENT_ID = process.env.CLIENT_ID || config.google.client_id;
+
 // Set port
 const PORT = process.env.PORT || config.express.port;
 
@@ -30,7 +29,7 @@ app.set("view engine", "pug");
 
 // Setup OAuth
 var auth = new GoogleAuth;
-var client = new auth.OAuth2(CLIENT_ID, '', 'http://localhost:8081/');
+var client = new auth.OAuth2(CLIENT_ID, '', '');
 
 router.use(cookieParser());
 
