@@ -53,7 +53,7 @@ router.use(function(req, res, next){
 //==========Endpoints==========//
 
 // homepage
-router.get("/", async function(req, res){
+router.get("/", authMiddleware, async function(req, res){
 				console.log("main");
 				// query for all recipes from newest to oldest
 				const query = db.Recipe.findAll({
@@ -102,16 +102,16 @@ function verify(token, client_id) {
 }
 
 function authMiddleware(req, res, next){
-				console.log(req.body.idtoken);
-				// verify(req.body.idtoken, CLIENT_ID).then(function(user){
-				// 				console.log(user.name);
-				// })
+				console.log(req.cookies.uid);
+				next();
 }
 
 // Handle OAuth login POST
 router.post("/auth", function(req, res){
-				verify(req.body.idtoken, CLIENT_ID).then(user => res.send(user.name))
-				// 				.then(res.redirect("/"));
+				verify(req.body.idtoken, CLIENT_ID).then(function(user){
+								res.cookie("uid", user.sub);
+								res.json(user);
+				})
 												// db.User
 												// 				.findOrCreate({
 												// 								where: {
@@ -127,6 +127,11 @@ router.post("/auth", function(req, res){
 												// 								}));
 												// 								console.log(created);
 												// 				});
+});
+
+router.post("/deauth", function(req, res){
+				res.clearCookie("uid");
+				res.send();
 });
 
 app.use("/",router);
