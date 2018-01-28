@@ -89,7 +89,7 @@ function authMiddleware(req, res, next) {
   if (req.cookies.uid) {
     next();
   } else {
-    res.status(401).redirect('/login').end();
+    res.status(401).redirect('/login');
   }
 }
 
