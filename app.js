@@ -55,6 +55,9 @@ router.use(function(req, res, next){
 router.get("/", authMiddleware, async function(req, res){
 				// query for all recipes from newest to oldest
 				const recipeQuery = db.Recipe.findAll({
+								where: {
+												author: req.cookies.uid
+								},
 								order: [['createdAt', 'DESC']]
 				});
 
@@ -89,7 +92,7 @@ router.get("/recipe/*", function(req, res){
 function authMiddleware(req, res, next){
 				if(req.cookies.uid){
 								next();
-				}else{
+				} else{
 								res.status(401).redirect("/login").end();
 				}
 }
@@ -98,13 +101,13 @@ router.get("/login", function(req, res){
 				res.render("login")
 });
 
-function verify(token, client_id) {
-				return new Promise((resolve, reject) => {
+function verify(token, client_id){
+				return new Promise((resolve, reject) =>{
 								payload = null;
-								client.verifyIdToken(token, client_id, function (e, login) {
-												if (e) {
+								client.verifyIdToken(token, client_id, function(e, login){
+												if(e){
 																reject(e);
-												} else {
+												} else{
 																payload = login.getPayload();
 																resolve(payload);
 												}
@@ -126,7 +129,7 @@ router.post("/auth", function(req, res){
 																				name_last: user.family_name
 																}
 												})
-												.spread((user, created) => {
+												.spread((user, created) =>{
 																console.log(user.get({
 																				plain: true
 																}));
@@ -137,18 +140,18 @@ router.post("/auth", function(req, res){
 				});
 });
 
-router.post("/deauth", function(req, res){
+router.post("/deauth", authMiddleware, function(req, res){
 				res.clearCookie("uid");
 				res.send();
 });
 
-app.use("/",router);
+app.use("/", router);
 
-app.use("*",function(req,res){
+app.use("*", function(req, res){
 				res.render("404");
 });
 
-app.listen(PORT,function(){
+app.listen(PORT, function(){
 				console.log("Listening on Port " + PORT);
 });
 
