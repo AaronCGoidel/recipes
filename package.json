@@ -1,6 +1,6 @@
 {
   "name": "cookbook",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "A recipe book for me",
   "main": "app.js",
   "scripts": {
@@ -16,6 +16,10 @@
     "pg": "^7.3.0",
     "pug": "latest",
     "sequelize": "^4.8.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AaronCGoidel/recipes.git"
   },
   "author": "Aaron Goidel",
   "license": "ISC"
