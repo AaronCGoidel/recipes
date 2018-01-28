@@ -109,24 +109,24 @@ function authMiddleware(req, res, next){
 // Handle OAuth login POST
 router.post("/auth", function(req, res){
 				verify(req.body.idtoken, CLIENT_ID).then(function(user){
+								db.User
+												.findOrCreate({
+																where: {
+																				id: user.sub
+																}, defaults: {
+																				name_first: user.given_name,
+																				name_last: user.family_name
+																}
+												})
+												.spread((user, created) => {
+																console.log(user.get({
+																				plain: true
+																}));
+																console.log(created);
+												});
 								res.cookie("uid", user.sub);
 								res.json(user);
-				})
-												// db.User
-												// 				.findOrCreate({
-												// 								where: {
-												// 												id: payload['sub']
-												// 								}, defaults: {
-												// 												name_first: payload['given_name'],
-												// 												name_last: payload['family_name']
-												// 								}
-												// 				})
-												// 				.spread((user, created) => {
-												// 								console.log(user.get({
-												// 												plain: true
-												// 								}));
-												// 								console.log(created);
-												// 				});
+				});
 });
 
 router.post("/deauth", function(req, res){
