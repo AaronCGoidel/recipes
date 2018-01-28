@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 const db = require('./models');
 var GoogleAuth = require('google-auth-library');
 
+
 // OAuth client ID
 const CLIENT_ID = '786319502323-fqjsf84cnqh79phubfcnnlior07hf385.apps.googleusercontent.com';
 
@@ -29,7 +30,7 @@ app.set("view engine", "pug");
 
 // Setup OAuth
 var auth = new GoogleAuth;
-var client = new auth.OAuth2(CLIENT_ID, '', '');
+var client = new auth.OAuth2(CLIENT_ID, '', 'http://localhost:8081/');
 
 router.use(cookieParser());
 
@@ -49,8 +50,11 @@ router.use(function(req, res, next){
 				next();
 });
 
+//==========Endpoints==========//
+
 // homepage
 router.get("/", async function(req, res){
+				console.log("main");
 				// query for all recipes from newest to oldest
 				const query = db.Recipe.findAll({
 								order: [['createdAt', 'DESC']]
@@ -81,26 +85,33 @@ router.get("/login", function(req, res){
 				res.render("login")
 });
 
-function googleAuthMiddleware(req, res, next){
-				client.verifyIdToken(
-								req.body.idtoken,
-								CLIENT_ID,
-								function(e, login){
-												if(e){
-																res.status(401).redirect("/login").end();
+function verify(token, client_id) {
+				return new Promise((resolve, reject) => {
+								payload = null;
+								client.verifyIdToken(token, client_id, function (e, login) {
+												if (e) {
+																reject(e);
+												} else {
+																payload = login.getPayload();
+																resolve(payload);
 												}
-												var payload = login.getPayload();
-												next([payload.sub, payload.given_name, payload.family_name]);
-								});
+								})
+				}).catch(function(err){
+								console.log('there was an error');
+				});
+}
+
+function authMiddleware(req, res, next){
+				console.log(req.body.idtoken);
+				// verify(req.body.idtoken, CLIENT_ID).then(function(user){
+				// 				console.log(user.name);
+				// })
 }
 
 // Handle OAuth login POST
-router.post("/auth", googleAuthMiddleware, function(req, res){
-				var payload = req.get();
-				console.log(payload)
-				// res.cookie("UID", payload['sub']);
-				// console.log(payload['sub']);
-
+router.post("/auth", function(req, res){
+				verify(req.body.idtoken, CLIENT_ID).then(user => res.send(user.name))
+				// 				.then(res.redirect("/"));
 												// db.User
 												// 				.findOrCreate({
 												// 								where: {
@@ -114,20 +125,9 @@ router.post("/auth", googleAuthMiddleware, function(req, res){
 												// 								console.log(user.get({
 												// 												plain: true
 												// 								}));
-												// 								console.log(created)
+												// 								console.log(created);
 												// 				});
-
 });
-
-router.post("/deauth", function(req, res){
-				res.render("404")
-});
-
-
-
-// db.Recipe.destroy({where: {}}).then(function () {});
-// db.User.sync({force: true});
-// db.Recipe.sync({force: true});
 
 app.use("/",router);
 

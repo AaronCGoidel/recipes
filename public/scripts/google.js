@@ -1,10 +1,11 @@
 function onSignIn(googleUser) {
-				var profile = googleUser.getBasicProfile();
 				var id_token = googleUser.getAuthResponse().id_token;
 				const xhr = new XMLHttpRequest();
-				xhr.open('POST', 'http://localhost:8081/auth', true);
+				xhr.open('POST', '/auth', true);
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
+				xhr.onload = function() {
+								console.log('Signed in as: ' + xhr.responseText);
+				};
 				xhr.send('idtoken=' + id_token);
 }
 
