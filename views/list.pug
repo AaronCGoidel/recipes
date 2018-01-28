@@ -1,0 +1,16 @@
+.list-container
+    if recipes[0]
+        ul
+            //pre=JSON.stringify(recipes, null, 3)
+            for recipe in recipes
+                li
+                    a(href='/recipe/' + recipe.id)
+                        p=recipe.name
+    else
+        h2
+            |Aww,
+            br
+            |It Looks Like You Don't Have Any Recipes Yet...
+            br
+            br
+            |Click The "Plus" Button To Get Cooking!

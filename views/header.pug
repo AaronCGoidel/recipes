@@ -1,6 +1,14 @@
 head
     link(rel='stylesheet', href='../style/header.css')
-
+    script(src = '../scripts/google.js')
+    script(src = 'https://apis.google.com/js/platform.js?onload=onLoad', async = '', defer = '')
 body
     .bar
         h1 #{name}
+    script.
+      function onLoad() {
+        gapi.load('auth2', function() {
+          gapi.auth2.init();
+        });
+      }
+    a(href = '#', onclick = 'signOut();') Sign out

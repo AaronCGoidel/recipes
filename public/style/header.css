@@ -1,15 +1,17 @@
 .bar {
-    height: 10vh;
+    height: 12vmin;
     width: 100%;
+    padding: 10px 0;
     box-shadow: 0 -1px 14px 0 black;
     background-color: var(--color-mid);
     overflow: hidden;
     color: var(--color-white);
-    
-    text-align: center;
 }
 
 h1 {
+    font-size: 5vmax;
+    text-align: center;
+    vertical-align: middle;
     margin: 0;
-    line-height: 10vh;
+    line-height: 12vmin;
 }

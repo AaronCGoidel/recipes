@@ -12,21 +12,7 @@ html(lang='en')
         - var name=user[0].name_first + "'s Cook Book"
         include header
 
-        .list-container
-            ul
-                //pre=JSON.stringify(recipes, null, 3)
-                for recipe in recipes
-                    li
-                        a(href='/recipe/' + recipe.id)
-                            p=recipe.name
+        include list
 
-        script.
-            function onLoad(){
-                gapi.load('auth2', function(){
-                    gapi.auth2.init();
-                });
-            }
-        a(href='#', onclick='signOut();') Sign out
-        script(src='../scripts/google.js')
-        script(src='https://apis.google.com/js/platform.js?onload=onLoad', async='', defer='')
+
 
