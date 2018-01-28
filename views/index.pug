@@ -8,6 +8,8 @@ html(lang='en')
         link(rel='stylesheet', href='../style/index.css')
         meta(name='google-signin-client_id', content='786319502323-fqjsf84cnqh79phubfcnnlior07hf385.apps.googleusercontent.com')
     body
+        //pre=JSON.stringify(user, null, 3)
+        - var name=user[0].name_first + "'s Cook Book"
         include header
 
         .list-container

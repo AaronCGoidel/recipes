@@ -54,15 +54,21 @@ router.use(function(req, res, next){
 // homepage
 router.get("/", authMiddleware, async function(req, res){
 				// query for all recipes from newest to oldest
-				const query = db.Recipe.findAll({
+				const recipeQuery = db.Recipe.findAll({
 								order: [['createdAt', 'DESC']]
 				});
 
+				const userQuery = db.User.findAll({
+								where: {
+												id: req.cookies.uid
+								}
+				});
 
-				const recipes = await query;
+				const recipes = await recipeQuery;
+				const user = await userQuery;
 
 				// render homepage with recipes
-				res.render("index", {recipes});
+				res.render("index", {user, recipes});
 });
 
 
