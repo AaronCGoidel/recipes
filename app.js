@@ -36,15 +36,15 @@ router.use(cookieParser());
 // test database connection
 db.sequelize
 				.authenticate()
-				.then(() =>{
+				.then(() => {
 								console.log('[DATABASE]Connection has been established successfully.');
 				})
-				.catch(err =>{
+				.catch(err => {
 								console.error('[DATABASE]Unable to connect to the database:', err);
 				});
 
 // Print request methods
-router.use(function(req, res, next){
+router.use(function (req, res, next) {
 				console.log("/" + req.method);
 				next();
 });
@@ -52,7 +52,7 @@ router.use(function(req, res, next){
 //==========Endpoints==========//
 
 // homepage
-router.get("/", authMiddleware, async function(req, res){
+router.get("/", authMiddleware, async function (req, res) {
 				// query for all recipes from newest to oldest
 				const recipeQuery = db.Recipe.findAll({
 								where: {
@@ -75,7 +75,7 @@ router.get("/", authMiddleware, async function(req, res){
 });
 
 
-router.get("/recipe/*", function(req, res){
+router.get("/recipe/*", function (req, res) {
 				// get recipe id from url
 				var getID = /[^/]*$/.exec(req.path)[0];
 				console.log(getID);
@@ -89,37 +89,37 @@ router.get("/recipe/*", function(req, res){
 });
 
 // Authentication middleware
-function authMiddleware(req, res, next){
-				if(req.cookies.uid){
+function authMiddleware(req, res, next) {
+				if (req.cookies.uid) {
 								next();
-				} else{
+				} else {
 								res.status(401).redirect("/login").end();
 				}
 }
 
-router.get("/login", function(req, res){
+router.get("/login", function (req, res) {
 				res.render("login")
 });
 
-function verify(token, client_id){
-				return new Promise((resolve, reject) =>{
+function verify(token, client_id) {
+				return new Promise((resolve, reject) => {
 								payload = null;
-								client.verifyIdToken(token, client_id, function(e, login){
-												if(e){
+								client.verifyIdToken(token, client_id, function (e, login) {
+												if (e) {
 																reject(e);
-												} else{
+												} else {
 																payload = login.getPayload();
 																resolve(payload);
 												}
 								})
-				}).catch(function(err){
+				}).catch(function (err) {
 								console.log('there was an error');
 				});
 }
 
 // Handle OAuth login POST
-router.post("/auth", function(req, res){
-				verify(req.body.idtoken, CLIENT_ID).then(function(user){
+router.post("/auth", function (req, res) {
+				verify(req.body.idtoken, CLIENT_ID).then(function (user) {
 								db.User
 												.findOrCreate({
 																where: {
@@ -129,7 +129,7 @@ router.post("/auth", function(req, res){
 																				name_last: user.family_name
 																}
 												})
-												.spread((user, created) =>{
+												.spread((user, created) => {
 																console.log(user.get({
 																				plain: true
 																}));
@@ -140,18 +140,18 @@ router.post("/auth", function(req, res){
 				});
 });
 
-router.post("/deauth", authMiddleware, function(req, res){
+router.post("/deauth", authMiddleware, function (req, res) {
 				res.clearCookie("uid");
 				res.send();
 });
 
 app.use("/", router);
 
-app.use("*", function(req, res){
+app.use("*", function (req, res) {
 				res.render("404");
 });
 
-app.listen(PORT, function(){
+app.listen(PORT, function () {
 				console.log("Listening on Port " + PORT);
 });
 
