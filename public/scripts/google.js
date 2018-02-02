@@ -1,7 +1,5 @@
 function onSignIn(googleUser){
 				var id_token = googleUser.getAuthResponse().id_token;
-  			var auth2 = gapi.auth2.getAuthInstance();
-  			auth2.disconnect();
 				const xhr = new XMLHttpRequest();
 				xhr.open('POST', '/auth', true);
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

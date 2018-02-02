@@ -84,6 +84,14 @@ router.get('/recipe/*', function(req, res) {
   }).then(thisRecipe => res.render('recipe', {thisRecipe}));
 });
 
+router.get('/create', authMiddleware, function(req, res){
+  res.render('create');
+});
+
+router.get('/upload', authMiddleware, function(req, res){
+
+});
+
 // Authentication middleware
 function authMiddleware(req, res, next) {
   if (req.cookies.uid) {
