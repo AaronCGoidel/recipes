@@ -30,10 +30,10 @@ function addIngredient(){
   increment();
   y.setAttribute("Name", "ingredient_" + elementNumber);
   r.appendChild(y);
-  g.setAttribute("onclick", "removeElement('recipeForm','id_" + elementNumber + "')");
+  g.setAttribute("onclick", "removeElement('ingredients','id_" + elementNumber + "')");
   r.appendChild(g);
   r.setAttribute("id", "id_" + elementNumber);
-  document.getElementById("recipeForm").appendChild(r);
+  document.getElementById("ingredients").appendChild(r);
 }
 
 function addStep(){
@@ -47,8 +47,8 @@ function addStep(){
   increment();
   y.setAttribute("Name", "step_" + elementNumber);
   r.appendChild(y);
-  g.setAttribute("onclick", "removeElement('recipeForm','id_" + elementNumber + "')");
+  g.setAttribute("onclick", "removeElement('steps','id_" + elementNumber + "')");
   r.appendChild(g);
   r.setAttribute("id", "id_" + elementNumber);
-  document.getElementById("recipeForm").appendChild(r);
+  document.getElementById("steps").appendChild(r);
 }
