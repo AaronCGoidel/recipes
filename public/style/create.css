@@ -1,0 +1,21 @@
+button {
+    background-color: var(--color-accent);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.main-container {
+    margin: 20px;
+}
+
+a {
+    font-size: 1.5em;
+    color: red;
+}

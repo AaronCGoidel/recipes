@@ -7,10 +7,12 @@
                     a(href='/recipe/' + recipe.id)
                         p=recipe.name
     else
+        a(href='/create')
+            button Add
         h2
             |Aww,
             br
             |It Looks Like You Don't Have Any Recipes Yet...
             br
             br
-            |Click The "Plus" Button To Get Cooking!
+            |Click The "Add" Button To Get Cooking!

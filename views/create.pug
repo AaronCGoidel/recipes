@@ -3,7 +3,18 @@ html(lang='en')
     head
         meta(charset='UTF-8')
         title Recipe Book
+        script(src='scripts/addFields.js', type='text/javascript')
         link(href='https://fonts.googleapis.com/css?family=Roboto', rel='stylesheet')
+        link(rel='stylesheet' href='style/parent.css')
+        link(rel='stylesheet' href='style/create.css')
     body
-        html
-            head
+        .main-container
+            h2 Add a Field
+            button(onclick='addIngredient()') Add Ingredient
+            button(onclick='addStep()') Add Step
+
+            h2 Create Your Recipe
+            form(action='/upload' accept-charset="utf-8" method='POST')
+                span#recipeForm
+                p
+                button(type='submit') Submit

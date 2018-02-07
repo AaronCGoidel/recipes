@@ -88,8 +88,8 @@ router.get('/create', authMiddleware, function(req, res){
   res.render('create');
 });
 
-router.get('/upload', authMiddleware, function(req, res){
-
+router.post('/upload', authMiddleware, function(req, res){
+  console.log(req.body)
 });
 
 // Authentication middleware
