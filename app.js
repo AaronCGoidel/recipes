@@ -53,14 +53,14 @@ router.get('/', authMiddleware, async function(req, res) {
   // query for all recipes from newest to oldest
   const recipeQuery = db.Recipe.findAll({
     where: {
-      author: req.cookies.uid,
+      author: req.uid,
     },
     order: [['createdAt', 'DESC']],
   });
 
   const userQuery = db.User.findAll({
     where: {
-      id: req.cookies.uid,
+      id: req.uid,
     },
   });
 
@@ -109,7 +109,7 @@ router.post('/upload', authMiddleware, function(req, res){
   db.Recipe.create({
     id: currentID,
     name: req.body.title,
-    author: req.cookies.uid,
+    author: req.uid,
     ingredients: currentIngredients,
     steps: currentSteps
   });
@@ -119,11 +119,15 @@ router.post('/upload', authMiddleware, function(req, res){
 
 // Authentication middleware
 function authMiddleware(req, res, next) {
-  if (req.cookies.uid) {
-    next();
-  } else {
-    res.status(401).redirect('/login');
-  }
+  verify(req.cookies.utoken).then(function(user){
+    if(user){
+      req.uid = user.sub;
+      next();
+    }else {
+      console.log("bad login");
+      res.status(401).redirect('/login');
+    }
+  });
 }
 
 router.get('/login', function(req, res) {
@@ -162,13 +166,13 @@ router.post('/auth', function(req, res) {
       }));
       console.log(created);
     });
-    res.cookie('uid', user.sub);
+    res.cookie('utoken', req.body.idtoken);
     res.json(user);
   });
 });
 
 router.post('/deauth', authMiddleware, function(req, res) {
-  res.clearCookie('uid');
+  res.clearCookie('utoken');
   res.send();
 });
 
