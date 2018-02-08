@@ -5,6 +5,7 @@ var pg = require('pg');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 const db = require('./models');
+const uuidv1 = require('uuid/v1');
 var GoogleAuth = require('google-auth-library');
 
 pg.defaults.ssl = true;
@@ -90,10 +91,7 @@ router.get('/create', authMiddleware, function(req, res){
 router.post('/upload', authMiddleware, function(req, res){
   console.log(req.body);
 
-  var currentID = req.body.title
-  .toLowerCase()
-  .replace(/[^\w ]+/g, '')
-  .replace(/ +/g, '-');
+  var currentID = uuidv1();
 
   var currentIngredients = [];
   var currentSteps = [];
@@ -114,7 +112,7 @@ router.post('/upload', authMiddleware, function(req, res){
     steps: currentSteps
   });
 
-  res.redirect(`/recipe/${currentID}`);
+  res.status(201).redirect(`/recipe/${currentID}`);
 });
 
 // Authentication middleware
@@ -179,7 +177,7 @@ router.post('/deauth', authMiddleware, function(req, res) {
 app.use('/', router);
 
 app.use('*', function(req, res) {
-  res.render('404');
+  res.status(404).render('404');
 });
 
 app.listen(PORT, function() {
