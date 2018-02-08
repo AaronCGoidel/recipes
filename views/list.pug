@@ -1,5 +1,7 @@
 .list-container
     if recipes[0]
+        a(href='/create')
+            button Add
         ul
             //pre=JSON.stringify(recipes, null, 3)
             for recipe in recipes

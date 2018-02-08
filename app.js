@@ -74,7 +74,6 @@ router.get('/', authMiddleware, async function(req, res) {
 router.get('/recipe/*', function(req, res) {
   // get recipe id from url
   var getID = /[^/]*$/.exec(req.path)[0];
-  console.log(getID);
 
   // query database for recipe with id from url
   db.Recipe.findOne({
@@ -90,7 +89,32 @@ router.get('/create', authMiddleware, function(req, res){
 
 router.post('/upload', authMiddleware, function(req, res){
   console.log(req.body);
-  
+
+  var currentID = req.body.title
+  .toLowerCase()
+  .replace(/[^\w ]+/g, '')
+  .replace(/ +/g, '-');
+
+  var currentIngredients = [];
+  var currentSteps = [];
+
+  for(var key in req.body){
+    if(key.startsWith("ingredient_")){
+      currentIngredients.push(req.body[key]);
+    }else if(key.startsWith("step_")){
+      currentSteps.push(req.body[key]);
+    }
+  }
+
+  db.Recipe.create({
+    id: currentID,
+    name: req.body.title,
+    author: req.cookies.uid,
+    ingredients: currentIngredients,
+    steps: currentSteps
+  });
+
+  res.redirect(`/recipe/${currentID}`);
 });
 
 // Authentication middleware
