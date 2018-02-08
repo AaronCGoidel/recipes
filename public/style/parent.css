@@ -7,9 +7,9 @@ html, body {
 }
 
 :root {
-    --color-dark: #2f3640;
-    --color-accent: #487eb0;
-    --color-mid: #273c75;
-    --color-light: #718093;
-    --color-white: #f5f6fa;
+    --color-black: #323232;
+    --color-yellow: #FFA749;
+    --color-red: #E74365;
+    --color-blue: #2AA7AE;
+    --color-white: #FFFFFA;
 }

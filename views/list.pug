@@ -1,7 +1,7 @@
+button(type='submit', onclick="window.location='/create';") Add
+
 .list-container
     if recipes[0]
-        a(href='/create')
-            button Add
         ul
             //pre=JSON.stringify(recipes, null, 3)
             for recipe in recipes
@@ -9,8 +9,6 @@
                     a(href='/recipe/' + recipe.id)
                         p=recipe.name
     else
-        a(href='/create')
-            button Add
         h2
             |Aww,
             br
