@@ -10,13 +10,15 @@ html(lang='en')
     body
         .main-container
             h2 Add a Field
-            button(onclick='addIngredient()') Add Ingredient
-            button(onclick='addStep()') Add Step
 
             h2 Create Your Recipe
             form(action='/upload' accept-charset="utf-8" method='POST')
-                input(type='text', placeholder='Title', name='title')
+                .input-container
+                    label Name of Recipe:
+                    input(type='text', placeholder='Title', name='title', autocomplete='off' required='true')
+                button(type="button" onclick='addIngredient()') Add Ingredient
                 span#ingredients
+                button(type="button" onclick='addStep()') Add Step
                 span#steps
                 p
                 button(type='submit') Submit

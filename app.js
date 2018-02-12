@@ -110,9 +110,8 @@ router.post('/upload', authMiddleware, function(req, res){
     author: req.uid,
     ingredients: currentIngredients,
     steps: currentSteps
-  });
-
-  res.status(201).redirect(`/recipe/${currentID}`);
+  })
+  .then(res.status(201).redirect(`/recipe/${currentID}`));
 });
 
 // Authentication middleware
