@@ -19,6 +19,11 @@ function removeElement(parentDiv, childDiv){
     var child = document.getElementById(childDiv);
     var parent = document.getElementById(parentDiv);
     parent.removeChild(child);
+    if(parentDiv === "ingredients"){
+      ingredientNumber -= 1;
+    }else {
+      stepNumber -= 1;
+    }
   }
   else{
     alert("Error Removing This Item");
