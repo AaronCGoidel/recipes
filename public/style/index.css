@@ -1,19 +1,29 @@
 .list-container {
-    margin-top: 20px;
-    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    margin-top: 80px;
 }
+
+ul {
+    padding: 0;
+}
+
 
 li {
-    margin-right: 50px;
-    height: 10vh;
-    font-size: 2em;
     list-style: none;
     border-bottom: 2px solid var(--color-black);
+    margin-bottom: 20px;
 }
 
-li a {
+.recipe-link {
+    padding-bottom: 2px;
+    width: 90%;
+    font-size: 2em;
     text-decoration: none;
     color: var(--color-black);
+    display: inline-block;
+    margin: 0;
 }
 
 .list-container h2 {
@@ -23,15 +33,31 @@ li a {
 }
 
 button {
-    background-color: var(--color-blue);
     border: none;
-    color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: block;
     font-size: 16px;
     margin: 5px 5% 5px 5px;
     float: right;
     cursor: pointer;
+}
+
+.blue-btn {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+}
+
+.red-btn {
+    background-color: var(--color-red);
+    color: var(--color-white);
+}
+
+.delete {
+    text-decoration: none;
+    font-size: 1.5em;
+    color: red;
+    display: none;
+    margin-right: 10px;
 }

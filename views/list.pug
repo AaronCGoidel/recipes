@@ -1,13 +1,16 @@
-button(type='submit', onclick="window.location='/create';") Add
+script(src='scripts/delete.js', type='text/javascript')
+
+button(type='submit', onclick="window.location='/create';").blue-btn Add
+button(type='submit' onclick="toggleDelete()").red-btn Delete
 
 .list-container
     if recipes[0]
         ul
             //pre=JSON.stringify(recipes, null, 3)
             for recipe in recipes
-                li
-                    a(href='/recipe/' + recipe.id)
-                        p=recipe.name
+                    li
+                        a.delete(href='/delete/' + recipe.id)="\u00D7"
+                        a.recipe-link(href='/recipe/' + recipe.id)=recipe.name
     else
         h2
             |Aww,
