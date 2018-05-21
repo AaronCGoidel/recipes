@@ -1,5 +1,8 @@
 const express = require('express');
 const {OAuth2Client} = require('google-auth-library');
+var pg = require('pg');
+const db = require('./models');
+
 
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -24,6 +27,15 @@ const client = new OAuth2Client(CLIENT_ID);
 // Use body parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+
+// DB
+pg.defaults.ssl = true;
+db.sequelize.authenticate().then(() => {
+  console.log('[DATABASE]Connection has been established successfully.');
+}).catch(err => {
+  console.error('[DATABASE]Unable to connect to the database:', err);
+});
 
 // Print request methods
 router.use(function(req, res, next) {
@@ -54,10 +66,21 @@ function verify(token) {
 
 router.post('/auth', async function(req, res) {
   const user = await verify(req.body.idToken);
-  console.log(user);
+  res.send(user);
 });
 
-router.post('/', function(req, res) {
+router.post('/check_user', async function(req, res) {
+  const user = await db.User.findAll({
+    where: {
+      id: req.body.userid,
+    },
+  });
+
+  if(user.length > 0){
+    res.send({isuser: true})
+  }else{
+    res.send({isuser: false})
+  }
 });
 
 app.use('/', router);
