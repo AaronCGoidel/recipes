@@ -1,27 +1,15 @@
 {
-  "name": "cookbook",
-  "version": "0.4.0",
-  "description": "A recipe book for me",
-  "main": "app.js",
+  "name": "CookBook",
+  "version": "0.0.1",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "cookie-parser": "^1.4.3",
-    "express": "latest",
-    "google-auth-library": "^0.12.0",
-    "googleapis": "^25.0.0",
-    "pg": "^7.3.0",
-    "pug": "latest",
-    "sequelize": "^4.8.2",
-    "uuid": "^3.2.1"
+    "express": "^4.16.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AaronCGoidel/recipes.git"
-  },
-  "author": "Aaron Goidel",
-  "license": "ISC"
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  }
 }
