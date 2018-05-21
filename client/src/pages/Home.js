@@ -5,6 +5,12 @@ import LoginOverlay from '../components/LoginOverlay';
 
 
 class Home extends React.Component {
+  componentDidMount() {
+    fetch('/', {
+      method: 'POST'
+    })
+  }
+
   googleLoginResponse = async (response) => {
     console.log(response);
 

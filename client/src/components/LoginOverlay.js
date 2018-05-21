@@ -17,16 +17,16 @@ class LoginOverlay extends React.Component {
         <Dialog
             open={!this.props.open}
             aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-        >
+            aria-describedby="alert-dialog-description">
           <DialogTitle id="alert-dialog-title">{"Sign in to get cookin'"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               Click the button below to sign in using your Google account and get started writing recipes.
             </DialogContentText>
+            <DialogActions>
             <GoogleLogin
                 style={{
-                  "marginTop": "10px",
+                  "marginTop": "20px",
                   "display": "inline-block",
                   "background": "rgb(209, 72, 54)",
                   "color": "rgb(255, 255, 255)",
@@ -43,6 +43,7 @@ class LoginOverlay extends React.Component {
                 onSuccess={this.props.onSuccess}
                 onFailure={e => {console.log(e)}}
             />
+            </DialogActions>
           </DialogContent>
         </Dialog>
       </div>

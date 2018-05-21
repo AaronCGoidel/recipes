@@ -2,10 +2,12 @@ const express = require('express');
 const {OAuth2Client} = require('google-auth-library');
 
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 const app = express();
 const router = express.Router();
 
+router.use(cookieParser());
 
 // App config
 var config = require(__dirname + '/config.js');
@@ -31,18 +33,31 @@ router.use(function(req, res, next) {
 
 
 // VERIFY GOOGLE USER TOKEN
-async function verify(token) {
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: CLIENT_ID,
-  });
-  const payload = ticket.getPayload();
-  const userid = payload['sub'];
-  return await userid
+function verify(token) {
+  return new Promise((resolve, reject) => {
+    let payload = null;
+    client.verifyIdToken({
+      idToken: token,
+      audience: CLIENT_ID,
+    }, function(e, ticket) {
+      if(e) {
+        reject(e);
+      }else{
+        payload = ticket.getPayload();
+        resolve(payload);
+      }
+    });
+  }).catch(function(err) {
+    console.log('there was an error');
+  })
 }
 
 router.post('/auth', async function(req, res) {
-  await verify(req.body.idToken).catch(console.error);
+  const user = await verify(req.body.idToken);
+  console.log(user);
+});
+
+router.post('/', function(req, res) {
 });
 
 app.use('/', router);
