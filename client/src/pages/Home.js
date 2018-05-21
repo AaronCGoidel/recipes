@@ -1,8 +1,7 @@
 import React from 'react';
 // Google Login
-import GoogleLogin from 'react-google-login';
 import Button from '@material-ui/core/Button';
-
+import LoginOverlay from '../components/LoginOverlay';
 
 
 class Home extends React.Component {
@@ -36,25 +35,7 @@ class Home extends React.Component {
     if(!this.state.isLoggedIn){
       body = (
           <div>
-            <GoogleLogin
-                style={{
-                  "display": "inline-block",
-                  "background": "rgb(209, 72, 54)",
-                  "color": "rgb(255, 255, 255)",
-                  "width": "190px",
-                  "paddingTop": "10px",
-                  "paddingBottom": "10px",
-                  "borderRadius": "2px",
-                  "border": "1px solid transparent",
-                  "fontSize": "16px",
-                  "fontFamily": "Roboto"
-                }}
-                buttonText={'Sign in with Google'}
-                clientId="786319502323-fqjsf84cnqh79phubfcnnlior07hf385.apps.googleusercontent.com"
-                onSuccess={e => {
-                  this.googleLoginResponse(e)}}
-                onFailure={e => {console.log(e)}}
-            />
+            <LoginOverlay open={this.state.isLoggedIn} onSuccess={e => {this.googleLoginResponse(e)}}/>
           </div>
       )
     }else{

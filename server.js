@@ -29,6 +29,8 @@ router.use(function(req, res, next) {
   next();
 });
 
+
+// VERIFY GOOGLE USER TOKEN
 async function verify(token) {
   const ticket = await client.verifyIdToken({
     idToken: token,
@@ -43,12 +45,7 @@ router.post('/auth', async function(req, res) {
   await verify(req.body.idToken).catch(console.error);
 });
 
-router.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
-
 app.use('/', router);
-
 
 app.listen(PORT, function() {
   console.log('Listening on Port ' + PORT);
