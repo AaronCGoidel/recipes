@@ -43,7 +43,7 @@ function AppMenu(props) {
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex_one}>
-              {props.name + "'s Cook Book"}
+              {props.name}
             </Typography>
             <Button color="inherit" onClick={props.buttonAction} className={classes.flex_zero}>Log Out</Button>
           </Toolbar>

@@ -91,8 +91,6 @@ router.post('/check_user', function(req, res) {
        res.send({isuser: false})
      }
    });
-
-
 });
 
 app.use('/', router);
