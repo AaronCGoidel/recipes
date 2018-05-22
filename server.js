@@ -66,24 +66,33 @@ function verify(token) {
 
 router.post('/auth', async function(req, res) {
   const user = await verify(req.body.idToken);
+  db.User.findOrCreate({
+    where: {
+      id: user.sub
+    },
+    defaults: {
+      name_first: user.given_name,
+      name_last: user.family_name,
+    }
+  });
   res.send(user);
 });
 
-router.post('/check_user', async function(req, res) {
-  const user = await db.User.findAll({
+router.post('/check_user', function(req, res) {
+   db.User.findAll({
     where: {
       id: req.body.userid,
     },
-  }).catch(function(err) {
-    console.error()
-  });
+  }).then(users => {
+     if(users.length > 0){
+       res.send({isuser: true,
+         fname: users[0].dataValues.name_first})
+     }else{
+       res.send({isuser: false})
+     }
+   });
 
-  if(user.length > 0){
-    res.send({isuser: true,
-    fname: user[0].dataValues.name_first})
-  }else{
-    res.send({isuser: false})
-  }
+
 });
 
 app.use('/', router);
