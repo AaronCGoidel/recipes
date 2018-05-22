@@ -1,7 +1,7 @@
 import React from 'react';
 // Google Login
-import Button from '@material-ui/core/Button';
 import LoginOverlay from '../components/LoginOverlay';
+import AppMenu from '../components/MenuBar';
 
 import Cookies from 'universal-cookie';
 
@@ -24,7 +24,11 @@ class Home extends React.Component {
     const body = await result.json();
 
     if(body.isuser){
-      this.setState({isLoggedIn: true, user: cookies.get('user-sess')});
+      this.setState({
+        isLoggedIn: true,
+        userid: cookies.get('user-sess'),
+        firstName: body.fname
+      });
     }
   };
 
@@ -42,14 +46,19 @@ class Home extends React.Component {
 
     const body = await authenticated.json();
     cookies.set('user-sess', body.sub, { path: '/' });
-    this.setState({isLoggedIn: true, user: body.sub});
+    this.setState({
+      isLoggedIn: true,
+      userid: body.sub,
+      firstName: body.given_name
+    });
   };
 
   constructor(props){
     super(props);
     this.state = {
       isLoggedIn: false,
-      user: ''
+      userid: '',
+      firstName: ''
     }
   }
 
@@ -65,16 +74,14 @@ class Home extends React.Component {
     }else{
       body = (
           <div>
-            <h1>LOGGED IN</h1>
-            <Button variant="raised" color={'primary'} onClick={e => {
+            <AppMenu name={this.state.firstName} buttonAction={e => {
               this.setState({
                 isLoggedIn: false,
-                user: ''
+                userid: ''
               });
               cookies.set('user-sess', 'none');
-            }}>
-              Sign Out
-            </Button>
+            }}/>
+            <h1>LOGGED IN</h1>
           </div>
     )
     }

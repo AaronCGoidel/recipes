@@ -74,10 +74,12 @@ router.post('/check_user', async function(req, res) {
     where: {
       id: req.body.userid,
     },
+  }).catch(function(err) {
   });
 
   if(user.length > 0){
-    res.send({isuser: true})
+    res.send({isuser: true,
+    fname: user[0].dataValues.name_first})
   }else{
     res.send({isuser: false})
   }
