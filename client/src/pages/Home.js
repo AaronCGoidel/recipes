@@ -19,6 +19,8 @@ class Home extends React.Component {
       body: JSON.stringify({
         userid: cookies.get('user-sess'),
       })
+    }).catch(function(err) {
+
     });
 
     const body = await result.json();

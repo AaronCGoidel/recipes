@@ -10,30 +10,42 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 const styles = {
   root: {
-    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'flex-start',
+    alignContent: 'stretch',
+    alignItems: 'center',
   },
-  flex: {
-    flex: 1,
+  flex_one: {
+    flex: '1 1 auto',
+    textAlign: 'left',
+  },
+  flex_zero: {
+    flex: '0 1 auto',
+    alignSelf: 'auto'
   },
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
+    flex: '0 1 auto',
+    alignSelf: 'auto'
   },
 };
 
 function AppMenu(props) {
   const { classes } = props;
   return (
-      <div className={classes.root}>
+      <div>
         <AppBar position="static">
-          <Toolbar>
+          <Toolbar className={classes.root}>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" className={classes.flex}>
+            <Typography variant="title" color="inherit" className={classes.flex_one}>
               {props.name + "'s Cook Book"}
             </Typography>
-            <Button color="inherit" onClick={props.buttonAction}>Log Out</Button>
+            <Button color="inherit" onClick={props.buttonAction} className={classes.flex_zero}>Log Out</Button>
           </Toolbar>
         </AppBar>
       </div>

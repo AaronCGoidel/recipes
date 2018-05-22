@@ -75,6 +75,7 @@ router.post('/check_user', async function(req, res) {
       id: req.body.userid,
     },
   }).catch(function(err) {
+    console.error()
   });
 
   if(user.length > 0){
@@ -86,6 +87,7 @@ router.post('/check_user', async function(req, res) {
 });
 
 app.use('/', router);
+
 
 app.listen(PORT, function() {
   console.log('Listening on Port ' + PORT);
