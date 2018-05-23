@@ -1,10 +1,9 @@
 'use strict'
 
 var Sequelize = require('sequelize');
-var config = require('../config.js');
 var db = {};
-
-var sequelize = new Sequelize(process.env.DATABASE_URL || config.data.URL);
+console.log(process.env.DATABASE_URL)
+var sequelize = new Sequelize(process.env.DATABASE_URL);
 
 
 db["User"] = sequelize['import'](__dirname + "/user.js");

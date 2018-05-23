@@ -14,14 +14,11 @@ const router = express.Router();
 
 router.use(cookieParser());
 
-// App config
-var config = require(__dirname + '/config.js');
-
 // OAuth client ID
-const CLIENT_ID = process.env.CLIENT_ID || config.google.client_id;
+const CLIENT_ID = process.env.CLIENT_ID;
 
 // Set port
-const PORT = process.env.PORT || config.express.port;
+const PORT = process.env.PORT || 8081;
 
 // Google auth client
 const client = new OAuth2Client(CLIENT_ID);

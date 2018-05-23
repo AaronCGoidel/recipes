@@ -39,7 +39,7 @@ class LoginOverlay extends React.Component {
                   "fontFamily": "Roboto"
                 }}
                 buttonText={'Sign in with Google'}
-                clientId="786319502323-fqjsf84cnqh79phubfcnnlior07hf385.apps.googleusercontent.com"
+                clientId={process.env.CLIENT_ID}
                 onSuccess={this.props.onSuccess}
                 onFailure={e => {console.log(e)}}
             />
