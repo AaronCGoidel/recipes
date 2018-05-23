@@ -1,6 +1,7 @@
 import React from 'react';
 import AppMenu from '../components/MenuBar';
 import Typography from '@material-ui/core/Typography';
+import {Gradient} from '../components/style/BackgroundGradient';
 
 
 class Library extends React.Component {
@@ -49,17 +50,20 @@ class Library extends React.Component {
                    buttonAction={this.props.buttonAction}
           />
           <div style={{
-            width: '100%',
             height: `calc(100vh - 64px)`,
-            background: 'linear-gradient(to right, #4568dc, #b06ab3)',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column'
           }}>
-            <Typography style={{color: '#ffffff'}} variant="display3">
+            <Gradient>
+            <Typography style={{
+              color: '#ffffff',
+              padding: '0 10px'
+            }} variant="display3">
               Welcome to your library!
             </Typography>
+            </Gradient>
           </div>
         </div>
     )

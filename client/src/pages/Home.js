@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import GoogleLogin from 'react-google-login';
 import {Link} from 'react-router-dom';
-
+import {Gradient} from '../components/style/BackgroundGradient';
 
 class Home extends React.Component {
   render () {
@@ -50,20 +50,15 @@ class Home extends React.Component {
       )
     }
     return (
-        <div style={{
-          width: '100%',
-          height: '100vh',
-          background: 'linear-gradient(to right, #4568dc, #b06ab3)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column'
-        }}>
-          <Typography style={{color: '#ffffff'}} variant="display3">
+        <Gradient>
+          <Typography style={{
+            color: '#ffffff',
+            padding: '0 10px 8px'
+          }} variant="display3">
             Let's Get Cookin'
           </Typography>
           {button}
-        </div>
+        </Gradient>
     )
   }
 }
