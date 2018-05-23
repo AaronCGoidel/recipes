@@ -28,7 +28,7 @@ const client = new OAuth2Client(CLIENT_ID);
 
 var env = process.env.NODE_ENV || 'prod';
 console.log(env);
-if(env === 'prod') {
+if(env === 'production') {
 // Make sure it can find the SPA
   const SPA_ROOT = path.resolve('./client/build');
   const indexPath = path.resolve(SPA_ROOT, 'index.html');
