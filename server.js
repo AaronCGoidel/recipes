@@ -1,8 +1,9 @@
 const express = require('express');
 const {OAuth2Client} = require('google-auth-library');
 var pg = require('pg');
-import {resolve} from 'path';
+const path = require('path');
 const db = require('./models');
+const fs = require('fs');
 
 
 var bodyParser = require('body-parser');
@@ -26,9 +27,9 @@ const PORT = process.env.PORT || config.express.port;
 const client = new OAuth2Client(CLIENT_ID);
 
 // Make sure it can find the SPA
-const SPA_ROOT = resolve('../client/build');
-const indexPath = resolve(SPA_ROOT, 'index.html');
-if (!DEV && indexPath) {
+const SPA_ROOT = path.resolve('./client/build');
+const indexPath = path.resolve(SPA_ROOT, 'index.html');
+if (indexPath) {
   console.log(`SPA index at: ${indexPath}`);
   if (!fs.existsSync(indexPath)) {
     console.error("Can't find SPA static files. Exiting.");
