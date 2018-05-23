@@ -37,15 +37,15 @@ function AppMenu(props) {
   const { classes } = props;
   return (
       <div>
-        <AppBar position="static">
+        <AppBar position="static" color={'default'} style={{height: '64px'}}>
           <Toolbar className={classes.root}>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
+              <MenuIcon style={{ fontSize: 32 }}/>
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex_one}>
               {props.name}
             </Typography>
-            <Button color="inherit" onClick={props.buttonAction} className={classes.flex_zero}>Log Out</Button>
+            <Button onClick={props.buttonAction} className={classes.flex_zero}>Log Out</Button>
           </Toolbar>
         </AppBar>
       </div>

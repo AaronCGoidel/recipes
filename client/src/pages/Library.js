@@ -1,5 +1,7 @@
 import React from 'react';
 import AppMenu from '../components/MenuBar';
+import Typography from '@material-ui/core/Typography';
+
 
 class Library extends React.Component {
   constructor(props) {
@@ -46,6 +48,19 @@ class Library extends React.Component {
           <AppMenu name={this.state.name +"'s Library"}
                    buttonAction={this.props.buttonAction}
           />
+          <div style={{
+            width: '100%',
+            height: `calc(100vh - 64px)`,
+            background: 'linear-gradient(to right, #4568dc, #b06ab3)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column'
+          }}>
+            <Typography style={{color: '#ffffff'}} variant="display3">
+              Welcome to your library!
+            </Typography>
+          </div>
         </div>
     )
   }

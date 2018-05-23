@@ -3,6 +3,8 @@ import {Route, Link, Switch} from 'react-router-dom';
 import Home from '../pages/Home';
 import Library from '../pages/Library';
 import LoginOverlay from '../components/LoginOverlay';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import theme from './style/theme';
 
 import './App.css';
 
@@ -66,34 +68,29 @@ class App extends Component {
   };
 
   render() {
-    let body = null;
-    if(localStorage.getItem('loggedIn') === 'true'){
-      body = (
-          <Switch>
-            <Route exact path={'/'} component={Home}/>
-            <Route path={'/l/:id'} render={(props) => (
-                <Library {...props} buttonAction={e => {
-                  window.location = '/';
-                  this.setState({
-                    userid: ''
-                  });
-                  localStorage.setItem('loggedIn', false);
-                  localStorage.setItem('user-session', 'none');
-                }}/>
-            )} />
-          </Switch>
-      );
-    }else{
-      body = (
-          <div>
-            <LoginOverlay onSuccess={e => {this.googleLoginResponse(e)}}/>
-          </div>
-      );
-    }
     return (
-        <div className="App">
-          {body}
-        </div>
+        <MuiThemeProvider theme={theme}>
+          <div className="App">
+            <Switch>
+              <Route exact path={'/'} render={(props) => (
+                  <Home {...props}
+                        isLoggedIn={localStorage.getItem('loggedIn') === 'true'}
+                        successAction={e => {this.googleLoginResponse(e)}}
+                  />
+              )}/>
+              <Route path={'/l/:id'} render={(props) => (
+                  <Library {...props} buttonAction={e => {
+                    window.location = '/';
+                    this.setState({
+                      userid: ''
+                    });
+                    localStorage.setItem('loggedIn', false);
+                    localStorage.setItem('user-session', 'none');
+                  }}/>
+              )} />
+            </Switch>
+          </div>
+        </MuiThemeProvider>
     );
   }
 }
