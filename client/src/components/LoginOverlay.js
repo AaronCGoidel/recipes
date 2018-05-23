@@ -15,7 +15,7 @@ class LoginOverlay extends React.Component {
     return (
       <div>
         <Dialog
-            open={!this.props.open}
+            open={true}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description">
           <DialogTitle id="alert-dialog-title">{"Sign in to get cookin'"}</DialogTitle>

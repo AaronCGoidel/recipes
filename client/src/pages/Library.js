@@ -46,7 +46,6 @@ class Library extends React.Component {
           <AppMenu name={this.state.name +"'s Library"}
                    buttonAction={this.props.buttonAction}
           />
-          <h1>{this.state.id}</h1>
         </div>
     )
   }

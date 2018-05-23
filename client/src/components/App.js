@@ -86,7 +86,7 @@ class App extends Component {
     }else{
       body = (
           <div>
-            <LoginOverlay open={localStorage.getItem('loggedIn') !== 'false'} onSuccess={e => {this.googleLoginResponse(e)}}/>
+            <LoginOverlay onSuccess={e => {this.googleLoginResponse(e)}}/>
           </div>
       );
     }
