@@ -24,6 +24,20 @@ const PORT = process.env.PORT || config.express.port;
 // Google auth client
 const client = new OAuth2Client(CLIENT_ID);
 
+// Make sure it can find the SPA
+const SPA_ROOT = resolve('../client/build');
+const indexPath = resolve(SPA_ROOT, 'index.html');
+if (!DEV && indexPath) {
+  console.log(`SPA index at: ${indexPath}`);
+  if (!fs.existsSync(indexPath)) {
+    console.error("Can't find SPA static files. Exiting.");
+    process.exit(1);
+  }
+}
+
+// Serve SPA files
+app.use(express.static(SPA_ROOT));
+
 // Use body parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -95,6 +109,9 @@ router.post('/check_user', function(req, res) {
 
 app.use('/', router);
 
+router.get('*', (req, res, next) => {
+  res.sendFile(SPA_ROOT + '/index.html');
+});
 
 app.listen(PORT, function() {
   console.log('Listening on Port ' + PORT);
