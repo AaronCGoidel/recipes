@@ -7,9 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import MenuDrawer from './MenuDrawer';
 
 const styles = {
   root: {
+    height: '64px',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'nowrap',
@@ -33,24 +35,40 @@ const styles = {
   },
 };
 
-function AppMenu(props) {
-  const { classes } = props;
-  return (
-      <div>
-        <AppBar position="static" color={'default'} style={{height: '64px'}}>
-          <Toolbar className={classes.root}>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon style={{ fontSize: 32 }}/>
-            </IconButton>
-            <Typography variant="title" color="inherit" className={classes.flex_one}>
-              {props.name}
-            </Typography>
-            <Button onClick={props.buttonAction} className={classes.flex_zero}>Log Out</Button>
-          </Toolbar>
-        </AppBar>
-      </div>
-  );
+class AppMenu extends React.Component {
+  state={
+    drawerOpen: false
+  };
+  render() {
+    const {classes} = this.props;
+    return (
+        <div>
+          <MenuDrawer open={this.state.drawerOpen} toggleOpen={(e) => this.setState({
+            drawerOpen: false
+          })}/>
+          <AppBar position="static" color={'default'} style={{height: '64px'}}>
+            <Toolbar className={classes.root}>
+              <IconButton className={classes.menuButton} color="inherit"
+                          aria-label="Menu"
+                          onClick={(e) => this.setState({
+                            drawerOpen: true
+                          })}
+              >
+                <MenuIcon style={{fontSize: 32}}/>
+              </IconButton>
+              <Typography variant="title" color="inherit"
+                          className={classes.flex_one}>
+                {this.props.name}
+              </Typography>
+              <Button onClick={this.props.buttonAction}
+                      className={classes.flex_zero}>Log Out</Button>
+            </Toolbar>
+          </AppBar>
+        </div>
+    );
+  }
 }
+
 
 AppMenu.propTypes = {
   classes: PropTypes.object.isRequired,

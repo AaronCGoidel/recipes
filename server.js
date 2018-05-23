@@ -26,19 +26,19 @@ const PORT = process.env.PORT || config.express.port;
 // Google auth client
 const client = new OAuth2Client(CLIENT_ID);
 
-// Make sure it can find the SPA
-const SPA_ROOT = path.resolve('./client/build');
-const indexPath = path.resolve(SPA_ROOT, 'index.html');
-if (indexPath) {
-  console.log(`SPA index at: ${indexPath}`);
-  if (!fs.existsSync(indexPath)) {
-    console.error("Can't find SPA static files. Exiting.");
-    process.exit(1);
-  }
-}
-
-// Serve SPA files
-app.use(express.static(SPA_ROOT));
+// // Make sure it can find the SPA
+// const SPA_ROOT = path.resolve('./client/build');
+// const indexPath = path.resolve(SPA_ROOT, 'index.html');
+// if (indexPath) {
+//   console.log(`SPA index at: ${indexPath}`);
+//   if (!fs.existsSync(indexPath)) {
+//     console.error("Can't find SPA static files. Exiting.");
+//     process.exit(1);
+//   }
+// }
+//
+// // Serve SPA files
+// app.use(express.static(SPA_ROOT));
 
 // Use body parser
 app.use(bodyParser.urlencoded({extended: false}));
