@@ -26,9 +26,9 @@ const PORT = process.env.PORT || config.express.port;
 // Google auth client
 const client = new OAuth2Client(CLIENT_ID);
 
-var env = process.env.NODE_ENV || 'dev';
+var env = process.env.NODE_ENV || 'prod';
 console.log(env);
-if(env !== 'dev') {
+if(env === 'prod') {
 // Make sure it can find the SPA
   const SPA_ROOT = path.resolve('./client/build');
   const indexPath = path.resolve(SPA_ROOT, 'index.html');
