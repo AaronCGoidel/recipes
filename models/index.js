@@ -2,7 +2,6 @@
 
 var Sequelize = require('sequelize');
 var db = {};
-console.log(process.env.DATABASE_URL)
 var sequelize = new Sequelize(process.env.DATABASE_URL);
 
 

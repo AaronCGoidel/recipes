@@ -2,7 +2,6 @@ const express = require('express');
 const {OAuth2Client} = require('google-auth-library');
 var pg = require('pg');
 const path = require('path');
-const db = require('./models');
 const fs = require('fs');
 
 
@@ -14,17 +13,9 @@ const router = express.Router();
 
 router.use(cookieParser());
 
-// OAuth client ID
-const CLIENT_ID = process.env.CLIENT_ID;
 
-// Set port
-const PORT = process.env.PORT || 8081;
+var env = process.env.NODE_ENV || 'development';
 
-// Google auth client
-const client = new OAuth2Client(CLIENT_ID);
-
-var env = process.env.NODE_ENV || 'prod';
-console.log(env);
 if(env === 'production') {
 // Make sure it can find the SPA
   const SPA_ROOT = path.resolve('./client/build');
@@ -39,7 +30,20 @@ if(env === 'production') {
 
 // Serve SPA files
   app.use(express.static(SPA_ROOT));
+}else{
+  require('dotenv').load();
 }
+
+const db = require('./models');
+
+// OAuth client ID
+const CLIENT_ID = process.env.CLIENT_ID;
+
+// Google auth client
+const client = new OAuth2Client(CLIENT_ID);
+
+// Set port
+const PORT = process.env.PORT || 8081;
 
 // Use body parser
 app.use(bodyParser.urlencoded({extended: false}));
