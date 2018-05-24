@@ -14,7 +14,6 @@ class Library extends React.Component {
   }
 
   parseLibraryId(){
-    console.log(this.props);
     return this.props.match.params.id;
   }
 
@@ -40,10 +39,13 @@ class Library extends React.Component {
         id: userId,
         name: body.fname
       });
+    }else{
+      window.location = '/404';
     }
   };
 
   render () {
+
     return (
         <div>
           <AppMenu name={this.state.name +"'s Library"}

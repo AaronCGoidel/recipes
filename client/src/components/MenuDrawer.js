@@ -1,20 +1,65 @@
 import React from 'react'
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import {Home, Book, Edit} from '@material-ui/icons';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
 
+const styles = theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+  nested: {
+    paddingLeft: theme.spacing.unit * 4,
+  },
+});
+
 class MenuDrawer extends React.Component {
+  state = { open: true };
+
+  handleClick = () => {
+    this.setState({ open: !this.state.open });
+  };
+
   render () {
+    const { classes } = this.props;
+
     let sideList = (
-          <List component="nav">
-            <ListItem button>
-              <ListItemText inset primary="Item One" />
+          <List component="nav" subheader={<ListSubheader component="div">Let's Get Cookin'</ListSubheader>}>
+            <ListItem button onClick={e => console.log("HOME")}>
+              <ListItemIcon>
+                <Home/>
+              </ListItemIcon>
+              <ListItemText inset primary="My Library" />
             </ListItem>
             <ListItem button>
-              <ListItemText inset primary="Item Two" />
+              <ListItemIcon>
+                <Edit/>
+              </ListItemIcon>
+              <ListItemText inset primary="New Book" />
             </ListItem>
+            <Divider/>
+            <ListItem button onClick={this.handleClick}>
+              <ListItemIcon>
+                <Book/>
+              </ListItemIcon>
+              <ListItemText inset primary="My Books" />
+              {this.state.open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+              </List>
+            </Collapse>
           </List>
     );
     return (
@@ -22,7 +67,6 @@ class MenuDrawer extends React.Component {
           <div
               tabIndex={0}
               role="button"
-              onClick={this.props.toggleOpen}
               onKeyDown={this.props.toggleOpen}
           >
             {sideList}
@@ -32,4 +76,8 @@ class MenuDrawer extends React.Component {
   }
 }
 
-export default MenuDrawer;
+MenuDrawer.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(MenuDrawer);

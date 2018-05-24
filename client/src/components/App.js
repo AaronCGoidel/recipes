@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Route, Link, Switch} from 'react-router-dom';
 import Home from '../pages/Home';
 import Library from '../pages/Library';
-import LoginOverlay from '../components/LoginOverlay';
+import FourPage from '../pages/404';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import theme from './style/theme';
 
@@ -88,6 +88,7 @@ class App extends Component {
                     localStorage.setItem('user-session', 'none');
                   }}/>
               )} />
+              <Route path="*" component={FourPage}/>
             </Switch>
           </div>
         </MuiThemeProvider>

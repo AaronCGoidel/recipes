@@ -60,7 +60,7 @@ class AppMenu extends React.Component {
                           className={classes.flex_one}>
                 {this.props.name}
               </Typography>
-              <Button onClick={this.props.buttonAction}
+              <Button variant={'outlined'} onClick={this.props.buttonAction}
                       className={classes.flex_zero}>Log Out</Button>
             </Toolbar>
           </AppBar>
