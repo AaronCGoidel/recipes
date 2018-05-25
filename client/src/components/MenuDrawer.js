@@ -33,15 +33,12 @@ class MenuDrawer extends React.Component {
   };
 
   handleClick = () => {
-    this.setState({ open: !this.state.open, showNewBook: this.state.showNewBook });
+    this.setState({ open: !this.state.open});
   };
 
-  handleCloseNewBook = (total) => {
-    if(total){
-      this.setState({open: !this.state.open, showNewBook: false});
-    }else{
-      this.setState({showNewBook: false});
-    }
+  handleCloseDialogue = () => {
+    this.setState({showNewBook: false});
+    this.props.toggleOpen();
   };
 
   render () {
@@ -85,7 +82,7 @@ class MenuDrawer extends React.Component {
           </div>
           {this.state.showNewBook ?
               <CreationPrompt value={this.state.bookTitle} onChange={e => this.setState({bookTitle: e.target.value})}
-              onCancel={e => this.setState({showNewBook: false})} onConfirm={e => {this.setState({showNewBook: false})
+              onCancel={this.handleCloseDialogue} onConfirm={() => {this.handleCloseDialogue();
               this.props.callback(this.state.bookTitle)}}/> :
               null
           }

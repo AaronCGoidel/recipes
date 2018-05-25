@@ -13,7 +13,7 @@ const CreationPrompt = ({value, onChange, onConfirm, onCancel}) => {
         <div>
           <Dialog
               open={true}
-              onClose={this.handleCloseNewBook}
+              onClose={onCancel}
           >
             <DialogTitle>{"Make a New Cookbook"}</DialogTitle>
             <DialogContent>

@@ -6,7 +6,7 @@ import FourPage from '../pages/404';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import theme from './style/theme';
 
-import './App.css';
+import './style/App.css';
 
 
 class App extends Component {
