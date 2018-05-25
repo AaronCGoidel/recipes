@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Route, Link, Switch} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import Home from '../pages/Home';
 import Library from '../pages/Library';
 import FourPage from '../pages/404';

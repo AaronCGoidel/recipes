@@ -2,14 +2,20 @@ import React from 'react';
 import AppMenu from '../components/MenuBar';
 import Typography from '@material-ui/core/Typography';
 import {Gradient} from '../components/style/BackgroundGradient';
+import BookList from '../components/BookList';
+import MenuDrawer from '../components/MenuDrawer';
+
 
 
 class Library extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      newBookTitle: '',
       id: '',
-      name: ''
+      name: '',
+      books: [],
+      drawerOpen: false
     };
   }
 
@@ -37,19 +43,67 @@ class Library extends React.Component {
     if(body.isuser){
       this.setState({
         id: userId,
-        name: body.fname
+        name: body.fname,
+      });
+      const books = await fetch('/get_library', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          authorId: userId,
+        })
+      });
+      const bookData = await books.json();
+      this.setState({
+        books: bookData
       });
     }else{
       window.location = '/404';
     }
   };
 
-  render () {
+  makeNewBook = async(dataFromChild) => {
+    const newBookPromise = await fetch('/create_book', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        authorId: this.state.id,
+        bookTitle: dataFromChild
+      })
+    });
+    const newBook = await newBookPromise.json();
+    this.setState({books: newBook});
+  };
 
+  render () {
+    let body = null;
+    if(this.state.books.length > 0){
+      body=(
+          <BookList books={this.state.books}/>
+      )
+    }else{
+      body=(
+          <Typography style={{
+            color: '#ffffff',
+            padding: '0 10px'
+          }} variant="display3">
+            Welcome to your library!
+          </Typography>
+      )
+    }
     return (
         <div>
+          <MenuDrawer callback={this.makeNewBook} open={this.state.drawerOpen} toggleOpen={(e) => this.setState({
+            drawerOpen: false
+          })}/>
           <AppMenu name={this.state.name +"'s Library"}
                    buttonAction={this.props.buttonAction}
+                   menuAction={e => this.setState({drawerOpen: !this.state.drawerOpen})}
           />
           <div style={{
             height: `calc(100vh - 64px)`,
@@ -59,12 +113,7 @@ class Library extends React.Component {
             flexDirection: 'column'
           }}>
             <Gradient>
-            <Typography style={{
-              color: '#ffffff',
-              padding: '0 10px'
-            }} variant="display3">
-              Welcome to your library!
-            </Typography>
+              {body}
             </Gradient>
           </div>
         </div>

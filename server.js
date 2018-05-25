@@ -3,6 +3,7 @@ const {OAuth2Client} = require('google-auth-library');
 var pg = require('pg');
 const path = require('path');
 const fs = require('fs');
+const uuidv1 = require('uuid/v1');
 
 
 var bodyParser = require('body-parser');
@@ -99,6 +100,28 @@ router.post('/auth', async function(req, res) {
   res.send(user);
 });
 
+router.post('/create_book', function(req, res){
+  db.Book.create({
+    title: req.body.bookTitle,
+    author: req.body.authorId,
+    uuid: uuidv1()
+  }).then(newBook => {
+    db.Book.findAll({
+      where: {
+        author: newBook.dataValues.author
+      }
+    }).then(result => res.send(result));
+  });
+});
+
+router.post('/get_library', function(req, res) {
+  db.Book.findAll({
+    where: {
+      author: req.body.authorId
+    }
+  }).then(result => res.send(result));
+});
+
 router.post('/check_user', function(req, res) {
    db.User.findAll({
     where: {
@@ -119,6 +142,10 @@ app.use('/', router);
 router.get('*', (req, res, next) => {
   res.sendFile(SPA_ROOT + '/index.html');
 });
+
+// db.Book.destroy({where: {}});
+// db.Book.sync({force:true});
+// db.User.sync({force:true});
 
 app.listen(PORT, function() {
   console.log('Listening on Port ' + PORT);

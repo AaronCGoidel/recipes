@@ -6,6 +6,7 @@ var sequelize = new Sequelize(process.env.DATABASE_URL);
 
 
 db["User"] = sequelize['import'](__dirname + "/user.js");
+db["Book"] = sequelize['import'](__dirname + "/book.js");
 
 Object.keys(db).forEach(function(modelName){
   if(db[modelName].associate){

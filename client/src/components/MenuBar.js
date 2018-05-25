@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import MenuDrawer from './MenuDrawer';
 
 const styles = {
   root: {
@@ -36,23 +35,15 @@ const styles = {
 };
 
 class AppMenu extends React.Component {
-  state={
-    drawerOpen: false
-  };
   render() {
     const {classes} = this.props;
     return (
         <div>
-          <MenuDrawer open={this.state.drawerOpen} toggleOpen={(e) => this.setState({
-            drawerOpen: false
-          })}/>
           <AppBar position="static" color={'default'} style={{height: '64px'}}>
             <Toolbar className={classes.root}>
               <IconButton className={classes.menuButton} color="inherit"
                           aria-label="Menu"
-                          onClick={(e) => this.setState({
-                            drawerOpen: true
-                          })}
+                          onClick={this.props.menuAction}
               >
                 <MenuIcon style={{fontSize: 32}}/>
               </IconButton>

@@ -1,17 +1,24 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import {Home, Book, Edit} from '@material-ui/icons';
+import {Book, Edit, Home} from '@material-ui/icons';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
   root: {
@@ -25,24 +32,35 @@ const styles = theme => ({
 });
 
 class MenuDrawer extends React.Component {
-  state = { open: true };
+  state = {
+    open: true,
+    showNewBook: false,
+    bookTitle: ''
+  };
 
   handleClick = () => {
-    this.setState({ open: !this.state.open });
+    this.setState({ open: !this.state.open, showNewBook: this.state.showNewBook });
+  };
+
+  handleCloseNewBook = (total) => {
+    if(total){
+      this.setState({open: !this.state.open, showNewBook: false});
+    }else{
+      this.setState({showNewBook: false});
+    }
   };
 
   render () {
-    const { classes } = this.props;
-
     let sideList = (
           <List component="nav" subheader={<ListSubheader component="div">Let's Get Cookin'</ListSubheader>}>
-            <ListItem button onClick={e => console.log("HOME")}>
+            <ListItem button>
               <ListItemIcon>
                 <Home/>
               </ListItemIcon>
               <ListItemText inset primary="My Library" />
             </ListItem>
-            <ListItem button>
+            <ListItem button onClick={() => this.setState({open: this.state.open,
+              showNewBook: true})}>
               <ListItemIcon>
                 <Edit/>
               </ListItemIcon>
@@ -71,6 +89,44 @@ class MenuDrawer extends React.Component {
           >
             {sideList}
           </div>
+          {this.state.showNewBook ?
+              <div>
+                <div>
+                  <Dialog
+                      open={this.state.showNewBook}
+                      onClose={this.handleCloseNewBook}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                  >
+                    <DialogTitle id="alert-dialog-title">{"Make a New Cookbook"}</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-description">
+                        Organize your recipes by putting them in books.
+                      </DialogContentText>
+                      <TextField
+                          required
+                          id="with-placeholder"
+                          label="With placeholder"
+                          placeholder="Placeholder"
+                          fullWidth
+                          margin="normal"
+                          onChange={e => {this.setState({bookTitle: e.target.value})}}
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={this.handleCloseNewBook} color="primary">
+                        Cancel
+                      </Button>
+                      <Button onClick={() => {this.props.callback(this.state.bookTitle);
+                        this.handleCloseNewBook(true)}} color="primary" autoFocus>
+                        Create
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </div>
+              </div> :
+              null
+          }
         </Drawer>
     )
   }
