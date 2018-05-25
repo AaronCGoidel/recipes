@@ -18,19 +18,8 @@ router.use(cookieParser());
 var env = process.env.NODE_ENV || 'development';
 
 if(env === 'production') {
-// Make sure it can find the SPA
-  const SPA_ROOT = path.resolve('./client/build');
-  const indexPath = path.resolve(SPA_ROOT, 'index.html');
-  if (indexPath) {
-    console.log(`SPA index at: ${indexPath}`);
-    if (!fs.existsSync(indexPath)) {
-      console.error("Can't find SPA static files. Exiting.");
-      process.exit(1);
-    }
-  }
-
-// Serve SPA files
-  app.use(express.static(SPA_ROOT));
+// Serve static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
 }else{
   require('dotenv').load();
 }
@@ -140,7 +129,7 @@ router.post('/check_user', function(req, res) {
 app.use('/', router);
 
 router.get('*', (req, res, next) => {
-  res.sendFile(SPA_ROOT + '/index.html');
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
 // db.Book.destroy({where: {}});

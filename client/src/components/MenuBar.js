@@ -39,7 +39,7 @@ class AppMenu extends React.Component {
     const {classes} = this.props;
     return (
         <div>
-          <AppBar position="static" color={'default'} style={{height: '64px'}}>
+          <AppBar position="static" color={'default'} style={{height: '64px', position: 'fixed'}}>
             <Toolbar className={classes.root}>
               <IconButton className={classes.menuButton} color="inherit"
                           aria-label="Menu"

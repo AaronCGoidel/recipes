@@ -112,7 +112,7 @@ class Library extends React.Component {
             alignItems: 'center',
             flexDirection: 'column'
           }}>
-            <Gradient>
+            <Gradient hasNav>
               {body}
             </Gradient>
           </div>
