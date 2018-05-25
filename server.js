@@ -7,12 +7,9 @@ const uuidv1 = require('uuid/v1');
 
 
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
 
 const app = express();
 const router = express.Router();
-
-router.use(cookieParser());
 
 
 var env = process.env.NODE_ENV || 'development';
