@@ -14,7 +14,7 @@ const gradientFrames = keyframes`
 
 export const Gradient = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: calc(100vh - 64px);
   background: -webkit-linear-gradient(135deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
   background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
   display: -webkit-box;

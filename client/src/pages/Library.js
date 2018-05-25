@@ -106,7 +106,7 @@ class Library extends React.Component {
                    menuAction={e => this.setState({drawerOpen: !this.state.drawerOpen})}
           />
           <div style={{
-            height: `calc(100vh - 64px)`,
+            minHeight: `calc(100vh - 64px)`,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
