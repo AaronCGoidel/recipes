@@ -80,24 +80,8 @@ class Library extends React.Component {
   };
 
   render () {
-    let body = null;
-    if(this.state.books.length > 0){
-      body=(
-          <BookList books={this.state.books}/>
-      )
-    }else{
-      body=(
-          <Typography style={{
-            color: '#ffffff',
-            padding: '0 10px',
-            marginTop: '64px'
-          }} variant="display3">
-            Welcome to your library!
-          </Typography>
-      )
-    }
     return (
-        <div>
+        <div style={{width: '100%'}}>
           <MenuDrawer callback={this.makeNewBook} open={this.state.drawerOpen} toggleOpen={(e) => this.setState({
             drawerOpen: false
           })}/>
@@ -106,7 +90,7 @@ class Library extends React.Component {
                    menuAction={e => this.setState({drawerOpen: !this.state.drawerOpen})}
           />
 
-          {body}
+          <BookList books={this.state.books}/>
           </div>
     )
   }

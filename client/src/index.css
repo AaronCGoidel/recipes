@@ -13,6 +13,11 @@ body {
   animation: index_gradient 30s ease infinite;
 }
 
+#root {
+  width: 100%;
+  height: 100vh;
+}
+
 @keyframes index_gradient {
   0% {
     background-position: 0% 50%
@@ -26,7 +31,10 @@ body {
 }
 
 .columnar {
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  text-align: center;
 }

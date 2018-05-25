@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import Book from './Book';
+import AddButton from './AddButton';
 import Grid from '@material-ui/core/Grid';
 
 class BookList extends React.Component {
@@ -9,8 +10,9 @@ class BookList extends React.Component {
         <Book title={book.title}/>
     );
     return (
-        <Grid style={{maxWidth: '100%', marginTop: '64px'}} container spacing={16} alignItems={'center'} justify={'space-around'}>
+        <Grid style={{maxWidth: '100%', marginTop: '64px'}} container spacing={16} alignItems={'flex-start'}>
           {listItems}
+          <AddButton/>
         </Grid>
     );
   }
