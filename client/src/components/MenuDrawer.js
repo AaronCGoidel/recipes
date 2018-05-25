@@ -12,13 +12,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
+import CreationPrompt from './CreationPrompt';
 
 const styles = theme => ({
   root: {
@@ -90,41 +84,9 @@ class MenuDrawer extends React.Component {
             {sideList}
           </div>
           {this.state.showNewBook ?
-              <div>
-                <div>
-                  <Dialog
-                      open={this.state.showNewBook}
-                      onClose={this.handleCloseNewBook}
-                      aria-labelledby="alert-dialog-title"
-                      aria-describedby="alert-dialog-description"
-                  >
-                    <DialogTitle id="alert-dialog-title">{"Make a New Cookbook"}</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id="alert-dialog-description">
-                        Organize your recipes by putting them in books.
-                      </DialogContentText>
-                      <TextField
-                          required
-                          id="with-placeholder"
-                          label="With placeholder"
-                          placeholder="Placeholder"
-                          fullWidth
-                          margin="normal"
-                          onChange={e => {this.setState({bookTitle: e.target.value})}}
-                      />
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={this.handleCloseNewBook} color="primary">
-                        Cancel
-                      </Button>
-                      <Button onClick={() => {this.props.callback(this.state.bookTitle);
-                        this.handleCloseNewBook(true)}} color="primary" autoFocus>
-                        Create
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                </div>
-              </div> :
+              <CreationPrompt value={this.state.bookTitle} onChange={e => this.setState({bookTitle: e.target.value})}
+              onCancel={e => this.setState({showNewBook: false})} onConfirm={e => {this.setState({showNewBook: false})
+              this.props.callback(this.state.bookTitle)}}/> :
               null
           }
         </Drawer>

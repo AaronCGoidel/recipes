@@ -2,7 +2,8 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import GoogleLogin from 'react-google-login';
 import {Link} from 'react-router-dom';
-import {Gradient} from '../components/style/BackgroundGradient';
+
+import '../index.css'
 
 class Home extends React.Component {
   render () {
@@ -33,6 +34,7 @@ class Home extends React.Component {
     }else{
       button = (
           <Link style={{
+            "width": '100px',
             "fontFamily": "Roboto",
             "display": 'block',
             "padding": '15px 35px',
@@ -50,7 +52,7 @@ class Home extends React.Component {
       )
     }
     return (
-        <Gradient>
+        <div className={'columnar'}>
           <Typography style={{
             color: '#ffffff',
             padding: '0 10px 8px'
@@ -58,7 +60,7 @@ class Home extends React.Component {
             Let's Get Cookin'
           </Typography>
           {button}
-        </Gradient>
+        </div>
     )
   }
 }

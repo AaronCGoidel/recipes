@@ -1,7 +1,6 @@
 import React from 'react';
 import AppMenu from '../components/MenuBar';
 import Typography from '@material-ui/core/Typography';
-import {Gradient} from '../components/style/BackgroundGradient';
 import BookList from '../components/BookList';
 import MenuDrawer from '../components/MenuDrawer';
 
@@ -90,7 +89,8 @@ class Library extends React.Component {
       body=(
           <Typography style={{
             color: '#ffffff',
-            padding: '0 10px'
+            padding: '0 10px',
+            marginTop: '64px'
           }} variant="display3">
             Welcome to your library!
           </Typography>
@@ -105,18 +105,9 @@ class Library extends React.Component {
                    buttonAction={this.props.buttonAction}
                    menuAction={e => this.setState({drawerOpen: !this.state.drawerOpen})}
           />
-          <div style={{
-            minHeight: `calc(100vh - 64px)`,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column'
-          }}>
-            <Gradient hasNav>
-              {body}
-            </Gradient>
+
+          {body}
           </div>
-        </div>
     )
   }
 }

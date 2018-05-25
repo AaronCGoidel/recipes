@@ -6,8 +6,8 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = {
   book: {
-    height: '275px',
-    width: '180px',
+    height: '198px',
+    width: '168px',
     margin: '20px'
   }
 };

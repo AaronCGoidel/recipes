@@ -1,11 +1,10 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import {Gradient} from '../components/style/BackgroundGradient';
 
 class FourPage extends React.Component {
   render () {
     return (
-        <Gradient>
+        <div>
           <Typography style={{
             color: '#ffffff',
             padding: '0 10px 8px'
@@ -25,7 +24,7 @@ class FourPage extends React.Component {
             we made a fucky wucky!!1 a wittle fucko boingo! <br/>
             the code monkies at our headquarters are working VEWY HAWD to fix this!
           </Typography>
-        </Gradient>
+        </div>
     )
   }
 }

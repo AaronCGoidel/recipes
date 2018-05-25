@@ -18,7 +18,7 @@ router.use(cookieParser());
 var env = process.env.NODE_ENV || 'development';
 
 if(env === 'production') {
-// Serve static files
+// Serve static file
   app.use(express.static(path.join(__dirname, 'client/build')));
 }else{
   require('dotenv').load();
@@ -128,7 +128,7 @@ router.post('/check_user', function(req, res) {
 
 app.use('/', router);
 
-router.get('*', (req, res, next) => {
+router.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
