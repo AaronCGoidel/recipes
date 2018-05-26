@@ -27,18 +27,11 @@ const styles = theme => ({
 
 class MenuDrawer extends React.Component {
   state = {
-    open: true,
-    showNewBook: false,
-    bookTitle: ''
+    open: true
   };
 
   handleClick = () => {
     this.setState({ open: !this.state.open});
-  };
-
-  handleCloseDialogue = () => {
-    this.setState({showNewBook: false});
-    this.props.toggleOpen();
   };
 
   render () {
@@ -50,8 +43,7 @@ class MenuDrawer extends React.Component {
               </ListItemIcon>
               <ListItemText inset primary="My Library" />
             </ListItem>
-            <ListItem button onClick={() => this.setState({open: this.state.open,
-              showNewBook: true})}>
+            <ListItem button onClick={this.props.toggleDialogue}>
               <ListItemIcon>
                 <Edit/>
               </ListItemIcon>
@@ -80,12 +72,6 @@ class MenuDrawer extends React.Component {
           >
             {sideList}
           </div>
-          {this.state.showNewBook ?
-              <CreationPrompt value={this.state.bookTitle} onChange={e => this.setState({bookTitle: e.target.value})}
-              onCancel={this.handleCloseDialogue} onConfirm={() => {this.handleCloseDialogue();
-              this.props.callback(this.state.bookTitle)}}/> :
-              null
-          }
         </Drawer>
     )
   }

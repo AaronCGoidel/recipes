@@ -3,6 +3,7 @@ import AppMenu from '../components/MenuBar';
 import Typography from '@material-ui/core/Typography';
 import BookList from '../components/BookList';
 import MenuDrawer from '../components/MenuDrawer';
+import CreationPrompt from '../components/CreationPrompt';
 
 
 
@@ -14,6 +15,7 @@ class Library extends React.Component {
       id: '',
       name: '',
       books: [],
+      showNewBook: false,
       drawerOpen: false
     };
   }
@@ -79,18 +81,38 @@ class Library extends React.Component {
     this.setState({books: newBook});
   };
 
+  toggleNewDialogue = () => {
+    this.setState({showNewBook: !this.state.showNewBook});
+  };
+
+  handleCloseDialogue = () => {
+    this.toggleNewDialogue();
+    this.setState({newBookTitle: '', drawerOpen: false});
+  };
+
   render () {
+    let creationDialogue = null;
+
+    if(this.state.showNewBook){
+      creationDialogue = (
+          <CreationPrompt value={this.state.newBookTitle} onChange={e => this.setState({newBookTitle: e.target.value})}
+                          onCancel={this.handleCloseDialogue} onConfirm={() => {this.handleCloseDialogue();
+            this.makeNewBook(this.state.newBookTitle)}}/>
+      )
+    }
+
     return (
         <div style={{width: '100%'}}>
-          <MenuDrawer callback={this.makeNewBook} open={this.state.drawerOpen} toggleOpen={(e) => this.setState({
-            drawerOpen: false
-          })}/>
+          <MenuDrawer callback={this.makeNewBook} open={this.state.drawerOpen}
+                      toggleOpen={(e) => this.setState({drawerOpen: false})} showNewBook={this.state.showNewBook}
+                      toggleDialogue={this.toggleNewDialogue}
+          />
+          {creationDialogue}
           <AppMenu name={this.state.name +"'s Library"}
                    buttonAction={this.props.buttonAction}
                    menuAction={e => this.setState({drawerOpen: !this.state.drawerOpen})}
           />
-
-          <BookList books={this.state.books}/>
+          <BookList books={this.state.books} buttonAction={this.toggleNewDialogue}/>
           </div>
     )
   }

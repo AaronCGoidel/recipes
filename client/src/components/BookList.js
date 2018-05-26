@@ -12,7 +12,7 @@ class BookList extends React.Component {
     return (
         <Grid style={{maxWidth: '100%', marginTop: '64px'}} container spacing={16} alignItems={'flex-start'}>
           {listItems}
-          <AddButton/>
+          <AddButton buttonAction={this.props.buttonAction}/>
         </Grid>
     );
   }
