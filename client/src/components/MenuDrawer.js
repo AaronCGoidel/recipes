@@ -58,8 +58,7 @@ class MenuDrawer extends React.Component {
               {this.state.open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-              </List>
+              {this.props.children}
             </Collapse>
           </List>
     );

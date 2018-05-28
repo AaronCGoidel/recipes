@@ -32,8 +32,8 @@ const CreationPrompt = ({value, onChange, onConfirm, onCancel}) => {
               <Button onClick={onCancel} color="primary">
                 Cancel
               </Button>
-              <Button onClick={onConfirm}
-                color="primary" autoFocus>
+              <Button disabled={value.length <= 0} onClick={onConfirm}
+                      color="primary" autoFocus>
                 Create
               </Button>
             </DialogActions>

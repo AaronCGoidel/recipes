@@ -1,7 +1,7 @@
 import React from 'react';
 import AppMenu from '../components/MenuBar';
 import Typography from '@material-ui/core/Typography';
-import BookList from '../components/BookList';
+import {BookGrid, BookList} from '../components/BookList';
 import MenuDrawer from '../components/MenuDrawer';
 import CreationPrompt from '../components/CreationPrompt';
 
@@ -106,13 +106,15 @@ class Library extends React.Component {
           <MenuDrawer callback={this.makeNewBook} open={this.state.drawerOpen}
                       toggleOpen={(e) => this.setState({drawerOpen: false})} showNewBook={this.state.showNewBook}
                       toggleDialogue={this.toggleNewDialogue}
-          />
+          >
+            <BookList books={this.state.books}/>
+          </MenuDrawer>
           {creationDialogue}
           <AppMenu name={this.state.name +"'s Library"}
                    buttonAction={this.props.buttonAction}
                    menuAction={e => this.setState({drawerOpen: !this.state.drawerOpen})}
           />
-          <BookList books={this.state.books} buttonAction={this.toggleNewDialogue}/>
+          <BookGrid books={this.state.books} buttonAction={this.toggleNewDialogue}/>
           </div>
     )
   }

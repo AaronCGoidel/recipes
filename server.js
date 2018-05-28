@@ -129,7 +129,7 @@ router.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
-db.Book.destroy({where: {}});
+// db.Book.destroy({where: {}});
 // db.Book.sync({force:true});
 // db.User.sync({force:true});
 
