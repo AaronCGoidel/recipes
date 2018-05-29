@@ -12,7 +12,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
-import CreationPrompt from './CreationPrompt';
+import {Link} from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -37,11 +37,11 @@ class MenuDrawer extends React.Component {
   render () {
     let sideList = (
           <List component="nav" subheader={<ListSubheader component="div">Let's Get Cookin'</ListSubheader>}>
-            <ListItem button>
+            <ListItem button component={props => <Link to={'/l/' + this.props.id} {...props} />}>
               <ListItemIcon>
                 <Home/>
               </ListItemIcon>
-              <ListItemText inset primary="My Library" />
+              <ListItemText primary="My Library" />
             </ListItem>
             <ListItem button onClick={this.props.toggleDialogue}>
               <ListItemIcon>

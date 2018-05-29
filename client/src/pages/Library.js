@@ -105,7 +105,7 @@ class Library extends React.Component {
         <div style={{width: '100%'}}>
           <MenuDrawer callback={this.makeNewBook} open={this.state.drawerOpen}
                       toggleOpen={(e) => this.setState({drawerOpen: false})} showNewBook={this.state.showNewBook}
-                      toggleDialogue={this.toggleNewDialogue}
+                      toggleDialogue={this.toggleNewDialogue} id={this.state.id}
           >
             <BookList books={this.state.books}/>
           </MenuDrawer>
