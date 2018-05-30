@@ -39,7 +39,7 @@ class AppMenu extends React.Component {
     const {classes} = this.props;
     return (
         <div>
-          <AppBar color={'default'} style={{height: '64px'}}>
+          <AppBar color={this.props.color} style={{height: '64px'}}>
             <Toolbar className={classes.root}>
               <IconButton className={classes.menuButton} color="inherit"
                           aria-label="Menu"
@@ -52,7 +52,7 @@ class AppMenu extends React.Component {
                 {this.props.name}
               </Typography>
               <Button variant={'outlined'} onClick={this.props.buttonAction}
-                      className={classes.flex_zero}>Log Out</Button>
+                      className={classes.flex_zero} color={'inherit'}>Log Out</Button>
             </Toolbar>
           </AppBar>
         </div>

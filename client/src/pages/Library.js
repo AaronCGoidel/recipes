@@ -1,11 +1,9 @@
 import React from 'react';
 import AppMenu from '../components/MenuBar';
-import Typography from '@material-ui/core/Typography';
-import {BookGrid, BookList} from '../components/BookList';
+import {CoverGrid, CoverList} from '../components/CoverList';
 import MenuDrawer from '../components/MenuDrawer';
 import CreationPrompt from '../components/CreationPrompt';
-
-
+import Book from '../components/Book';
 
 class Library extends React.Component {
   constructor(props) {
@@ -16,15 +14,18 @@ class Library extends React.Component {
       name: '',
       books: [],
       showNewBook: false,
-      drawerOpen: false
+      drawerOpen: false,
+      bookOpen: false,
+      barColor: 'default',
+      currentBook: ''
     };
   }
 
-  parseLibraryId(){
+  parseLibraryId() {
     return this.props.match.params.id;
   }
 
-  componentDidMount = async() => {
+  componentDidMount = async () => {
     let userId = this.parseLibraryId();
     const result = await fetch('/check_user', {
       method: 'POST',
@@ -34,14 +35,14 @@ class Library extends React.Component {
       },
       body: JSON.stringify({
         userid: userId,
-      })
+      }),
     }).catch(function(err) {
 
     });
 
     const body = await result.json();
 
-    if(body.isuser){
+    if (body.isuser) {
       this.setState({
         id: userId,
         name: body.fname,
@@ -54,18 +55,18 @@ class Library extends React.Component {
         },
         body: JSON.stringify({
           authorId: userId,
-        })
+        }),
       });
       const bookData = await books.json();
       this.setState({
-        books: bookData
+        books: bookData,
       });
-    }else{
+    } else {
       window.location = '/404';
     }
   };
 
-  makeNewBook = async(dataFromChild) => {
+  makeNewBook = async (dataFromChild) => {
     const newBookPromise = await fetch('/create_book', {
       method: 'POST',
       headers: {
@@ -74,8 +75,8 @@ class Library extends React.Component {
       },
       body: JSON.stringify({
         authorId: this.state.id,
-        bookTitle: dataFromChild
-      })
+        bookTitle: dataFromChild,
+      }),
     });
     const newBook = await newBookPromise.json();
     this.setState({books: newBook});
@@ -90,34 +91,47 @@ class Library extends React.Component {
     this.setState({newBookTitle: '', drawerOpen: false});
   };
 
-  render () {
+  handleOpenBook = (title) => {
+    this.setState({bookOpen: true, currentBook: title});
+  };
+
+  render() {
     let creationDialogue = null;
 
-    if(this.state.showNewBook){
+    if (this.state.showNewBook) {
       creationDialogue = (
-          <CreationPrompt value={this.state.newBookTitle} onChange={e => this.setState({newBookTitle: e.target.value})}
-                          onCancel={this.handleCloseDialogue} onConfirm={() => {this.handleCloseDialogue();
-            this.makeNewBook(this.state.newBookTitle)}}/>
-      )
+          <CreationPrompt value={this.state.newBookTitle}
+                          onChange={e => this.setState(
+                              {newBookTitle: e.target.value})}
+                          onCancel={this.handleCloseDialogue} onConfirm={() => {
+            this.handleCloseDialogue();
+            this.makeNewBook(this.state.newBookTitle);
+          }}/>
+      );
     }
 
     return (
         <div style={{width: '100%'}}>
           <MenuDrawer callback={this.makeNewBook} open={this.state.drawerOpen}
-                      toggleOpen={(e) => this.setState({drawerOpen: false})} showNewBook={this.state.showNewBook}
-                      toggleDialogue={this.toggleNewDialogue} id={this.state.id}
-          >
-            <BookList books={this.state.books}/>
+                      toggleOpen={(e) => this.setState({drawerOpen: false})}
+                      showNewBook={this.state.showNewBook}
+                      toggleDialogue={this.toggleNewDialogue} id={this.state.id}>
+            <CoverList books={this.state.books}/>
           </MenuDrawer>
           {creationDialogue}
-          <AppMenu name={this.state.name +"'s Library"}
+          <AppMenu name={this.state.name + '\'s Library'}
                    buttonAction={this.props.buttonAction}
-                   menuAction={e => this.setState({drawerOpen: !this.state.drawerOpen})}
+                   menuAction={e => this.setState(
+                       {drawerOpen: !this.state.drawerOpen})}
+                   color={this.state.barColor}
           />
-          <BookGrid books={this.state.books} buttonAction={this.toggleNewDialogue}/>
-          </div>
-    )
+          <CoverGrid books={this.state.books}
+                     buttonAction={this.toggleNewDialogue}
+                     onClick={this.handleOpenBook}/>
+          <Book open={this.state.bookOpen} handleClose={e => this.setState({bookOpen: false})} title={this.state.currentBook}/>
+        </div>
+    );
   }
 }
 
-export default Library
+export default Library;

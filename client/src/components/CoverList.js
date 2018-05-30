@@ -1,17 +1,17 @@
 import React from 'react';
-import Book from './Book';
+import Cover from './Cover';
 import AddButton from './AddButton';
 import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 import List from  '@material-ui/core/List';
 import ListItemText from '@material-ui/core/ListItemText';
 
-export class BookGrid extends React.Component {
+export class CoverGrid extends React.Component {
   render() {
     let counter = 0;
     const books = this.props.books;
     const listItems = books.map((book) =>
-        <Book key={`book_${counter++}`}title={book.title}/>
+        <Cover key={`book_${counter++}`} title={book.title} onClick={this.props.onClick}/>
     );
     return (
         <Grid style={{maxWidth: '100%', marginTop: '64px'}} container spacing={16} alignItems={'flex-start'}>
@@ -22,7 +22,7 @@ export class BookGrid extends React.Component {
   }
 }
 
-export class BookList extends React.Component {
+export class CoverList extends React.Component {
   render() {
     let counter = 0;
     const listItems = this.props.books.map((book) =>

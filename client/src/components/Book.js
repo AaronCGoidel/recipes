@@ -1,38 +1,43 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import withStyles from "@material-ui/core/styles/withStyles";
-
+import Dialog from '@material-ui/core/Dialog';
+import Slide from '@material-ui/core/Slide';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
 
-const styles = {
-  book: {
-    height: '198px',
-    width: '148px',
-    margin: '20px',
-  },
-};
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
 
 class Book extends React.Component {
   render() {
-    const {classes} = this.props;
     return (
         <div>
-          <Card style={{display: 'flex', flexDirection: 'row', wordBreak: 'break-word', paddingRight: '5px'}}
-                className={classes.book}>
-            <div style={{
-              flexBasis: '20px',
-              backgroundColor: 'rgba(50, 50, 200, 0.8)',
-            }}/>
-            <Typography style={{
-              flex: 1, textAlign:"left", marginTop:"20px", marginLeft:"10px", textTransform: 'capitalize'}}
-                        variant={'headline'}>
-              {this.props.title}
-            </Typography>
-          </Card>
-
+          <Dialog fullScreen open={this.props.open}
+                  TransitionComponent={Transition}
+                  onClose={this.props.handleClose}
+          >
+            <AppBar>
+              <Toolbar>
+                <IconButton style={{marginRight: '20px'}}
+                            color="inherit" onClick={this.props.handleClose} aria-label="Close">
+                  <CloseIcon />
+                </IconButton>
+                <Typography variant="title" color="inherit">
+                  {this.props.title}
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <h1>
+              Test
+            </h1>
+          </Dialog>
         </div>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(Book);
+export default Book;
