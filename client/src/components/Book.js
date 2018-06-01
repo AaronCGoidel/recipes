@@ -20,7 +20,7 @@ class Book extends React.Component {
                   TransitionComponent={Transition}
                   onClose={this.props.handleClose}
           >
-            <AppBar>
+            <AppBar style={{height: '64px'}}>
               <Toolbar>
                 <IconButton style={{marginRight: '20px'}}
                             color="inherit" onClick={this.props.handleClose} aria-label="Close">
@@ -31,9 +31,8 @@ class Book extends React.Component {
                 </Typography>
               </Toolbar>
             </AppBar>
-            <h1>
-              Test
-            </h1>
+            <div style={{marginTop: '64px'}}>
+            </div>
           </Dialog>
         </div>
     )
