@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import {Link} from 'react-router-dom';
+import CookieLogo from '../components/style/Logo';
 
 import '../index.css'
 
@@ -8,8 +9,10 @@ class FourPage extends React.Component {
   render () {
     return (
         <div className={'columnar'} style={{background: '#ffffff'}}>
-          <Typography variant={'display1'}>
-            404
+          <Typography variant={'display1'} style={{fontSize: '150px'}}>
+            <span>4</span>
+            <CookieLogo/>
+            <span>4</span>
           </Typography>
         <Link style={{
             "width": '100px',
