@@ -36,7 +36,7 @@ class MenuDrawer extends React.Component {
 
   render () {
     let sideList = (
-          <List component="nav" subheader={<ListSubheader component="div">Let's Get Cookin'</ListSubheader>}>
+          <List style={{width: '250px'}} component="nav" subheader={<ListSubheader component="div">Let's Get Cookin'</ListSubheader>}>
             <ListItem button component={props => <Link to={'/l/' + this.props.id} {...props} />}>
               <ListItemIcon>
                 <Home/>
@@ -60,6 +60,7 @@ class MenuDrawer extends React.Component {
             <Collapse in={this.state.open} timeout="auto" unmountOnExit>
               {this.props.children}
             </Collapse>
+            <Divider/>
           </List>
     );
     return (

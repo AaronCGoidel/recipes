@@ -4,6 +4,8 @@ import {CoverGrid, CoverList} from '../components/CoverList';
 import MenuDrawer from '../components/MenuDrawer';
 import CreationPrompt from '../components/CreationPrompt';
 import Book from '../components/Book';
+import Button from '@material-ui/core/Button';
+import Delete from '@material-ui/icons/Delete';
 
 class Library extends React.Component {
   constructor(props) {
@@ -17,7 +19,8 @@ class Library extends React.Component {
       drawerOpen: false,
       bookOpen: false,
       barColor: 'default',
-      currentBook: ''
+      currentBook: '',
+      delete: false
     };
   }
 
@@ -64,6 +67,26 @@ class Library extends React.Component {
     } else {
       window.location = '/404';
     }
+  };
+
+  deleteBook = async (id) => {
+    let temp = this.state.books;
+    for(let i = temp.length - 1; i >= 0; i--) {
+      if(temp[i].uuid === id) {
+        temp.splice(i, 1);
+        this.setState({books: temp});
+      }
+    }
+    fetch('/delete_book', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+    });
   };
 
   makeNewBook = async (dataFromChild) => {
@@ -116,7 +139,7 @@ class Library extends React.Component {
                       toggleOpen={(e) => this.setState({drawerOpen: false})}
                       showNewBook={this.state.showNewBook}
                       toggleDialogue={this.toggleNewDialogue} id={this.state.id}>
-            <CoverList books={this.state.books}/>
+            <CoverList books={this.state.books} onClick={this.handleOpenBook}/>
           </MenuDrawer>
           {creationDialogue}
           <AppMenu name={this.state.name + '\'s Library'}
@@ -127,8 +150,16 @@ class Library extends React.Component {
           />
           <CoverGrid books={this.state.books}
                      buttonAction={this.toggleNewDialogue}
-                     onClick={this.handleOpenBook}/>
+                     onClick={this.handleOpenBook} delete={this.state.delete} deleteAction={this.deleteBook}/>
           <Book open={this.state.bookOpen} handleClose={e => this.setState({bookOpen: false})} title={this.state.currentBook}/>
+
+          <Button variant="fab" color="default" style={{
+            position: 'absolute',
+            bottom: '20px',
+            right: '20px'
+          }} onClick={e => this.setState({delete: !this.state.delete})}>
+            <Delete/>
+          </Button>
         </div>
     );
   }

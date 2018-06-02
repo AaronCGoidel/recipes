@@ -123,6 +123,14 @@ router.post('/check_user', function(req, res) {
    });
 });
 
+router.post('/delete_book', function(req, res) {
+  db.Book.destroy({
+    where: {
+      uuid: req.body.id
+    }
+  }).then(e => res.send({deleted: ''}))
+});
+
 app.use('/', router);
 
 router.get('*', (req, res) => {
