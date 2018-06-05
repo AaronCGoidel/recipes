@@ -79,7 +79,8 @@ async function authMiddleware(req, res, next) {
     req.user = user;
     next();
   }else {
-    res.status(401);
+    console.log("failed");
+    res.status(401).send({error: "failed to authenticate"});
   }
 }
 
@@ -106,7 +107,7 @@ router.post('/create_book', authMiddleware, function(req, res){
       where: {
         author: newBook.dataValues.author
       }
-    }).then(result => res.send(result));
+    }).then(result => res.status(201).send(result));
   });
 });
 
