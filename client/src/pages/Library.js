@@ -158,7 +158,7 @@ class Library extends React.Component {
           <Book open={this.state.bookOpen} handleClose={e => this.setState({bookOpen: false})} title={this.state.currentBook}/>
 
           <Button variant="fab" color="default" style={{
-            position: 'absolute',
+            position: 'fixed',
             bottom: '20px',
             right: '20px'
           }} onClick={e => this.setState({delete: !this.state.delete})}>

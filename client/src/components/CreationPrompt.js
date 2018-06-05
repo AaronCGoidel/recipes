@@ -21,6 +21,13 @@ const CreationPrompt = ({value, onChange, onConfirm, onCancel}) => {
                 Organize your recipes by putting them in books.
               </DialogContentText>
               <TextField
+                  onKeyPress={(event) => {
+                    if (event.key === 'Enter') {
+                      onConfirm();
+                      event.preventDefault();
+                    }
+                  }}
+                  autoFocus
                   placeholder="Title"
                   fullWidth
                   margin="normal"
@@ -32,7 +39,7 @@ const CreationPrompt = ({value, onChange, onConfirm, onCancel}) => {
               <Button onClick={onCancel} color="primary">
                 Cancel
               </Button>
-              <Button disabled={value.length <= 0} onClick={onConfirm}
+              <Button variant={'raised'} disabled={value.length <= 0} onClick={onConfirm}
                       color="primary" autoFocus>
                 Create
               </Button>
