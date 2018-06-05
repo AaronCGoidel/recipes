@@ -68,28 +68,38 @@ function verify(token) {
       }
     });
   }).catch(function(err) {
-    console.log('there was an error');
+    console.log('error validating id token');
+    return(false)
   })
 }
 
-router.post('/auth', async function(req, res) {
-  const user = await verify(req.body.idToken);
+async function authMiddleware(req, res, next) {
+  let user = await verify(req.body.idToken);
+  if(user !== false){
+    req.user = user;
+    next();
+  }else {
+    res.status(401);
+  }
+}
+
+router.post('/auth', authMiddleware, async function(req, res) {
   db.User.findOrCreate({
     where: {
-      id: user.sub
+      id: req.user.sub
     },
     defaults: {
-      name_first: user.given_name,
-      name_last: user.family_name,
+      name_first: req.user.given_name,
+      name_last: req.user.family_name,
     }
   });
-  res.send(user);
+  res.send({authenticated: true, user: req.user});
 });
 
-router.post('/create_book', function(req, res){
+router.post('/create_book', authMiddleware, function(req, res){
   db.Book.create({
     title: req.body.bookTitle,
-    author: req.body.authorId,
+    author: req.user.sub,
     uuid: uuidv1()
   }).then(newBook => {
     db.Book.findAll({
@@ -100,7 +110,7 @@ router.post('/create_book', function(req, res){
   });
 });
 
-router.post('/get_library', function(req, res) {
+router.post('/get_library', authMiddleware, function(req, res) {
   db.Book.findAll({
     where: {
       author: req.body.authorId
@@ -108,7 +118,7 @@ router.post('/get_library', function(req, res) {
   }).then(result => res.send(result));
 });
 
-router.post('/check_user', function(req, res) {
+router.post('/get_user', function(req, res) {
    db.User.findAll({
     where: {
       id: req.body.userid,
@@ -123,7 +133,7 @@ router.post('/check_user', function(req, res) {
    });
 });
 
-router.post('/delete_book', function(req, res) {
+router.post('/delete_book', authMiddleware, function(req, res) {
   db.Book.destroy({
     where: {
       uuid: req.body.id

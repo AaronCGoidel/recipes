@@ -48,7 +48,7 @@ class Home extends React.Component {
             "cursor": 'pointer',
             "outline": 0,
             "textDecoration": 'none'
-          }} to={'/l/' + localStorage.getItem('user-session')}>My Library</Link>
+          }} to={'/l/' + this.props.id}>My Library</Link>
       )
     }
     return (

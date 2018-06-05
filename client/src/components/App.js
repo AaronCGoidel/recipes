@@ -13,58 +13,54 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      userid: '',
-      firstName: ''
+      id: '',
+      idToken: '',
+      loggedIn: false
     }
   }
 
   componentDidMount = async() => {
-    if(localStorage.getItem('loggedIn') !== 'true'){
-      let usersessionid = localStorage.getItem('user-session');
-      const result = await fetch('/check_user', {
+    if(localStorage.getItem('idToken')){
+      const response = await fetch('/auth', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userid: usersessionid,
+          idToken: localStorage.getItem('idToken')
         })
-      }).catch(function(err) {
-
       });
-
-      const body = await result.json();
-
-      if(body.isuser){
+      const body = await response.json();
+      if(body.authenticated === true){
         this.setState({
-          userid: usersessionid,
-          firstName: body.fname
-        });
-        localStorage.setItem('loggedIn', true)
+          id: body.user.sub,
+          loggedIn: true
+        })
       }
     }
   };
 
-  googleLoginResponse = async (response) => {
-    const authenticated = await fetch('/auth', {
+  googleLoginResponse = async (res) => {
+    const response = await fetch('/auth', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        idToken: response.tokenId,
+        idToken: res.tokenId,
       })
     });
 
-    const body = await authenticated.json();
-    localStorage.setItem('loggedIn', true);
-    localStorage.setItem('user-session', body.sub);
-    this.setState({
-      userid: body.sub,
-      firstName: body.given_name
-    });
+    const body = await response.json();
+    if(body.authenticated === true){
+      localStorage.setItem('idToken', res.tokenId);
+      this.setState({
+        id: body.user.sub,
+        loggedIn: true
+      })
+    }
   };
 
   render() {
@@ -74,7 +70,8 @@ class App extends Component {
             <Switch>
               <Route exact path={'/'} render={(props) => (
                   <Home {...props}
-                        isLoggedIn={localStorage.getItem('loggedIn') === 'true'}
+                        isLoggedIn={this.state.loggedIn}
+                        id={this.state.id}
                         successAction={e => {this.googleLoginResponse(e)}}
                   />
               )}/>
@@ -82,10 +79,9 @@ class App extends Component {
                   <Library {...props} buttonAction={e => {
                     window.location = '/';
                     this.setState({
-                      userid: ''
+                      loggedIn: false
                     });
-                    localStorage.setItem('loggedIn', false);
-                    localStorage.setItem('user-session', 'none');
+                    localStorage.clear()
                   }}/>
               )} />
               <Route path="*" component={FourPage}/>

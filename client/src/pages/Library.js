@@ -12,6 +12,7 @@ class Library extends React.Component {
     super(props);
     this.state = {
       newBookTitle: '',
+      idToken: localStorage.getItem('idToken'),
       id: '',
       name: '',
       books: [],
@@ -30,7 +31,7 @@ class Library extends React.Component {
 
   componentDidMount = async () => {
     let userId = this.parseLibraryId();
-    const result = await fetch('/check_user', {
+    const result = await fetch('/get_user', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -57,6 +58,7 @@ class Library extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          idToken: this.state.idToken,
           authorId: userId,
         }),
       });
@@ -84,6 +86,7 @@ class Library extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        idToken: this.state.idToken,
         id: id,
       }),
     });
@@ -97,6 +100,7 @@ class Library extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        idToken: this.state.idToken,
         authorId: this.state.id,
         bookTitle: dataFromChild,
       }),
