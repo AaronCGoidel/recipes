@@ -6,6 +6,7 @@ import CreationPrompt from '../components/CreationPrompt';
 import Book from '../components/Book';
 import Button from '@material-ui/core/Button';
 import Delete from '@material-ui/icons/Delete';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 class Library extends React.Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class Library extends React.Component {
       bookOpen: false,
       barColor: 'default',
       currentBook: '',
-      delete: false
+      delete: false,
+      loading: true
     };
   }
 
@@ -65,6 +67,7 @@ class Library extends React.Component {
       const bookData = await books.json();
       this.setState({
         books: bookData,
+        loading: false
       });
     } else {
       window.location = '/404';
@@ -156,6 +159,8 @@ class Library extends React.Component {
                      buttonAction={this.toggleNewDialogue}
                      onClick={this.handleOpenBook} delete={this.state.delete} deleteAction={this.deleteBook}/>
           <Book open={this.state.bookOpen} handleClose={e => this.setState({bookOpen: false})} title={this.state.currentBook}/>
+
+          <LoadingSpinner active={this.state.loading}/>
 
           <Button variant="fab" color="default" style={{
             position: 'fixed',
