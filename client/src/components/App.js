@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom';
 import Home from '../pages/Home';
 import Library from '../pages/Library';
 import FourPage from '../pages/404';
@@ -76,7 +76,11 @@ class App extends Component {
                   />
               )}/>
               <Route path={'/l/:id'} render={(props) => (
-                  <Library {...props} buttonAction={e => {
+                  <Library {...props}
+                           toggleLoggedIn={e => {
+                             this.setState({loggedIn: !this.state.loggedIn});
+                           }}
+                           buttonAction={e => {
                     window.location = '/';
                     this.setState({
                       loggedIn: false

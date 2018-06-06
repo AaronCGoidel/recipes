@@ -65,10 +65,14 @@ class Library extends React.Component {
         }),
       });
       const bookData = await books.json();
-      this.setState({
-        books: bookData,
-        loading: false
-      });
+      if(!bookData.error){
+        this.setState({
+          books: bookData,
+          loading: false
+        });
+      }else{
+        this.props.history.push('/');
+      }
     } else {
       window.location = '/404';
     }
